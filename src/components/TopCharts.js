@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 
 // tools
-import {getWebToken} from '../tools/getWebToken';
+import { getWebToken } from '../tools/getWebToken';
 const fetch = require("node-fetch");
 
 class TopCharts extends Component {
@@ -97,19 +97,20 @@ class TopCharts extends Component {
     let artUrl = props.artwork.url;
 
     // slice off the ending '{w}x{h}bb.jpeg' part of the url. we can replace it
-    // with '200x200bb.jpeg' for example. width + height can be assigned.
+    // with '200x200bb.jpeg' for example. width + height can be assigned this way
     let slicePoint = artUrl.indexOf('{w}');
 
     let picUrl = artUrl.slice(0, slicePoint) + '1000x1000bb.jpeg';
 
     return (
-      <div className="col-12 col-md-6" style={styles.cardContainer}>
-        <Card style={{border: 'none'}}>
+      <div className="col" style={styles.cardContainer}>
+        <Card style={{ border: 'none' }}>
           <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
           <CardImgOverlay style={styles.imageOverlay}>
 
             <CardTitle style={styles.cardTitle}># 1 {props.type}</CardTitle>
             <CardText style={styles.cardText}>{props.name.toLowerCase()}</CardText>
+            <CardText style={styles.cardTitle}>{props.artistName}</CardText>
 
           </CardImgOverlay>
         </Card>
@@ -120,7 +121,7 @@ class TopCharts extends Component {
   // for the main Icon / Logo
   renderIcon() {
     return (
-      <div className="col-4" style={styles.cardContainer}>
+      <div className="col" style={styles.cardContainer}>
 
         <img style={styles.logo} src={'https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/1024/itunes_5122x.png'} className="" alt="logo" />
       </div>
@@ -132,21 +133,18 @@ class TopCharts extends Component {
   render() {
     return (
 
-      <div className="row" style={styles.container}>
+      <div className="" style={styles.container}>
 
-        <div className="col-6 col-md-8">
+        <div className="row" style={styles.cardsHolder}>
 
-          <div className="row" style={styles.imageHolder}>
+          {this.state.topAlbumsData && this.renderCard(this.state.topAlbumsData[0])}
 
-            {this.state.topAlbumsData && this.renderCard(this.state.topAlbumsData[0])}
-
-            {this.state.topSongsData && this.renderCard(this.state.topSongsData[0])}
-
-          </div>
+          {this.state.topSongsData && this.renderCard(this.state.topSongsData[0])}
 
         </div>
 
-        {this.renderIcon()}
+
+        {/* {this.renderIcon()} */}
 
       </div>
 
@@ -158,27 +156,28 @@ const styles = {
   container: {
     padding: '5px'
   },
-  imageHolder: {
-    maxWidth: '600px',
-    minWidth: '300px'
+  cardsHolder: {
+    maxWidth: '900px',
+    margin: 'auto auto'
+    // minWidth: '300px'
   },
   cardContainer: {
-    width: '300px',
-    height: '300px',
+    // width: '300px',
+    // height: '300px',
   },
   cardImg: {
-    width: '260px',
-    height: '260px',
+    width: '100%',
+    // height: '260px',
   },
   imageOverlay: {
-    width: '260px',
-    height: '260px',
+    width: '100%',
+    // height: '260px',
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   cardText: {
     textAlign: 'left',
     color: 'white',
-    fontSize: '24px',
+    fontSize: '20px',
     width: '80%',
     margin: 'auto auto'
   },
@@ -187,13 +186,13 @@ const styles = {
     color: 'white',
     margin: '15px',
     width: '50%',
-    margin: 'auto auto'
+    // margin: 'auto auto'
   },
   logo: {
     width: '240px',
     height: '240px',
   }
-   
+
 }
 
 export default TopCharts;

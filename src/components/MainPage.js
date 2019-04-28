@@ -20,7 +20,7 @@ class MainPage extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="main-page">
 
         {/* display the top song and album of the day, with the main icon */}
         <TopCharts />

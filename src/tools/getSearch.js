@@ -23,7 +23,7 @@ const headers = {
 const query = 'roxy music';
 
 // for a search query
-const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,artists,albums`;
+const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,music-videos`;
 
 fetch(searchUrl, {
   method: 'GET',
@@ -37,17 +37,16 @@ fetch(searchUrl, {
   .then((json) => {
 
     let albums = json.results.albums.data;
-    let artists = json.results.artists.data
+    let songs = json.results.songs.data;
+
     console.log(albums.length + " albums returned");
-    console.log(artists.length + " artists returned")
+    console.log(songs.length + " artists returned")
 
-    console.log(`*************************Top Artist***********************`);
+    console.log(`*************************Top Songs***********************`);
 
-    artists.map( (artist) => {
-      console.log(artist.attributes)
-    })
-    let artistData = artists.map((artist, i) => {
-      let { name, url, genreNames } = artist.attributes;
+    console.log(songs[0].attributes)
+    let songData = songs.map((song, i) => {
+      let { name, url, genreNames } = song.attributes;
       return {
         name,
         url,
@@ -55,11 +54,11 @@ fetch(searchUrl, {
       }
     })
 
-    // console.log(artistData);
+    // console.log(songData);
 
     console.log(`**********************************************************`);
 
-    console.log(`*************************Top 5 Albums***********************`);
+    console.log(`*************************Top Music Videos***********************`);
 
     console.log(albums[0].attributes)
     let albumData = albums.map((album, i) => {
@@ -73,9 +72,12 @@ fetch(searchUrl, {
     })
 
     // console.log(albumData);
-
-
     console.log(`**********************************************************`);
+
+    console.log('**********************************************************');
+    console.log(json.results['music-videos'].data[0].attributes)
+    console.log('**********************************************************');
+
 
   })
   .catch((e) => console.log(e))

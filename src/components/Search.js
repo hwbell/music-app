@@ -10,7 +10,8 @@ import { getWebToken } from '../tools/getWebToken';
 
 const fetch = require("node-fetch");
 
-class TopCharts extends Component {
+// Search
+class Search extends Component {
 
   constructor(props) {
     super(props);
@@ -21,10 +22,10 @@ class TopCharts extends Component {
   }
 
   componentDidMount() {
-    this.fetchTopCharts();
+    this.fetchSearch();
   }
 
-  // for the Top song and album
+  // for the Top songs and albums
   fetchSearch() {
 
     // this is the form specified by apple
@@ -113,6 +114,6 @@ const styles = {
 
 }
 
-export default TopCharts;
+export default Search;
 
 
