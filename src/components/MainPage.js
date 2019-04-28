@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -26,7 +26,7 @@ class MainPage extends Component {
         <TopCharts />
 
         {/* display the search bar / results with song results on the left hand side */}
-        {/* <Songs /> */}
+        {/* <Genres /> */}
 
         {/* display the small icon albums (not the top 3) from the search */}
         {/* <RestOfAlbums /> */}

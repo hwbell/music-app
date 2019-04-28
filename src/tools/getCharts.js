@@ -1,5 +1,5 @@
 
-const { privateKeyId } = require('../../env');
+const { privateKeyId } = require('../env');
 
 const fetch = require("node-fetch");
 const jwt = require("jsonwebtoken");
