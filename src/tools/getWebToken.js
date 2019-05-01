@@ -4,10 +4,12 @@ const jwt = require("jsonwebtoken");
 
 // const { privateKeyId } = require('../env');
 
+// get the key from env.js in local or process.env.REACT_APP_PRIVATE_KEY_ID on heroku 
+let privateKeyId;
 if ( process.env.REACT_APP_PRIVATE_KEY_ID ) {
-  const privateKeyId = process.env.REACT_APP_PRIVATE_KEY_ID;
+  privateKeyId = process.env.REACT_APP_PRIVATE_KEY_ID;
 } else {
-  const privateKeyId = require('../env');
+  privateKeyId = require('../env').privateKeyId;
 }
 
 const teamId = process.env.REACT_APP_TEAM_ID;
