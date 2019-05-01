@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
+import Title from '../components/Title';
 
 // tools
 import { getWebToken } from '../tools/getWebToken';
@@ -108,7 +109,7 @@ class TopCharts extends Component {
           <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
           <CardImgOverlay style={styles.imageOverlay}>
 
-            <CardTitle style={styles.cardTitle}># 1 {props.type}</CardTitle>
+            <CardTitle style={styles.cardTitle}>featured {props.type}</CardTitle>
             <CardText style={styles.cardText}>{props.name.toLowerCase()}</CardText>
             <CardText style={styles.cardTitle}>{props.artistName}</CardText>
 
@@ -135,11 +136,13 @@ class TopCharts extends Component {
 
       <div className="" style={styles.container}>
 
+        <Title text="explore more music"/>
+
         <div className="row" style={styles.cardsHolder}>
 
-          {this.state.topAlbumsData && this.renderCard(this.state.topAlbumsData[0])}
+          {this.state.topAlbumsData && this.renderCard(this.state.topAlbumsData[7])}
 
-          {this.state.topSongsData && this.renderCard(this.state.topSongsData[0])}
+          {this.state.topSongsData && this.renderCard(this.state.topSongsData[7])}
 
         </div>
 
@@ -171,21 +174,22 @@ const styles = {
   },
   imageOverlay: {
     width: '100%',
-    // height: '260px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   cardText: {
-    textAlign: 'left',
+    textAlign: 'center',
     color: 'white',
-    fontSize: '20px',
-    width: '80%',
-    margin: 'auto auto'
+    fontSize: '26px',
+    // margin: 'auto auto'
   },
   cardTitle: {
-    textAlign: 'left',
+    textAlign: 'center',
     color: 'white',
-    margin: '15px',
-    width: '50%',
+    // margin: 'auto auto',
     // margin: 'auto auto'
   },
   logo: {

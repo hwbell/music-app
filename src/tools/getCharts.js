@@ -24,7 +24,7 @@ const headers = {
 }
 
 // for a charts query
-const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,playlists&genre=20&limit=10';
+const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&genre=20&limit=10';
 
 
 fetch(chartsUrl, {

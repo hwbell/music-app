@@ -23,7 +23,7 @@ const headers = {
 const query = 'roxy music';
 
 // for a search query
-const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,music-videos`;
+const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,playlists`;
 
 fetch(searchUrl, {
   method: 'GET',
@@ -36,48 +36,35 @@ fetch(searchUrl, {
   // for charts
   .then((json) => {
 
-    let albums = json.results.albums.data;
+    // console.log(json.results.albums.data)
+
     let songs = json.results.songs.data;
+    let albums = json.results.albums.data;
+    let artists = json.results.artists.data;
+    let playlists = json.results.playlists.data;
 
+    console.log(songs.length + " songs returned");
     console.log(albums.length + " albums returned");
-    console.log(songs.length + " artists returned")
+    console.log(artists.length + " artists returned");
+    console.log(playlists.length + " playlists returned");
 
-    console.log(`*************************Top Songs***********************`);
+    [songs, albums, artists, playlists].forEach((obj) => {
+      console.log(`*************************Top ${obj[0].type}***********************`);
 
-    console.log(songs[0].attributes)
-    let songData = songs.map((song, i) => {
-      let { name, url, genreNames } = song.attributes;
-      return {
-        name,
-        url,
-        genreNames
-      }
-    })
+      console.log(obj[0].attributes);
+      
+      let songData = obj.map((item, i) => {
+        let { name, url, genreNames } = item.attributes;
+        let { id, type, href, attributes } = item;
+        return {
+          name,
+          url,
+          genreNames
+        }
+      })
 
-    // console.log(songData);
-
-    console.log(`**********************************************************`);
-
-    console.log(`*************************Top Music Videos***********************`);
-
-    console.log(albums[0].attributes)
-    let albumData = albums.map((album, i) => {
-      let { artwork, artistName, url, genreNames } = album.attributes;
-      return {
-        artwork,
-        artistName,
-        url,
-        genreNames
-      }
-    })
-
-    // console.log(albumData);
-    console.log(`**********************************************************`);
-
-    console.log('**********************************************************');
-    console.log(json.results['music-videos'].data[0].attributes)
-    console.log('**********************************************************');
-
+      console.log(`**********************************************************`);
+    });
 
   })
   .catch((e) => console.log(e))
