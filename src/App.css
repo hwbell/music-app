@@ -4,16 +4,48 @@
 }
 
 body {
-  background: white;
+  background: whitesmoke;
+}
+
+.album-detail-card::-webkit-scrollbar { 
+  width: 8px;
+  height: 13px;
+  border-radius: 5px;
+  /* background-color: rgba(245, 245, 245, 0.3); */
+}
+
+.album-detail-card::-webkit-scrollbar-thumb { 
+  background-color: whitesmoke;
+  border-radius: 5px;
+  background-color: rgb(156, 154, 160);
 }
 
 .title {
   color: rgb(84, 26, 219);
 }
 
-/* .album-card-container {
-  box-shadow: 1px 1px 1px 1px rgba(20, 4, 58, 0.4);
-} */
+/* the Albums component */
+
+  /* AlbumCard component */
+.album-card {
+  box-shadow: 2px 2px 5px 1px rgba(2,2,2,0.5);
+}
+.button-purple {
+  background-color: rgb(84, 26, 219) !important;
+  color: white !important;
+}
+.button-purple:hover {
+  background-color: rgb(55, 30, 114) !important;
+}
+
+  /* AlbumDetail component */
+.album-detail-card {
+  height: 550px;
+  overflow-y: auto;
+  transition:  all 0.3s ease;
+  background: -webkit-gradient(linear, left top, right bottom, from(rgb(157, 102, 253)), to(rgb(0, 0, 0)));
+  box-shadow: 2px 2px 5px 1px rgb(54, 10, 110);
+}
 
 /* for the ReactCSSTransitionGroup animations */
 .example-enter {

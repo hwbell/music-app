@@ -41,8 +41,9 @@ class Genres extends Component {
   render() {
     return (
 
-      <div className="album-card-container col-6 col-md-4" style={styles.cardContainer}>
+      <div className="album-card col-6 col-md-4" style={styles.cardContainer}>
         <Card style={{ border: 'none' }}
+          onClick={() => this.props.handleClick(this.props.index)}
           onMouseOver={this.onHover}
           onMouseLeave={this.onExit}>
 
@@ -72,13 +73,12 @@ const styles = {
     width: '100%'
   },
   cardContainer: {
-    padding: '0',
-    margin: '0',
-    minWidth: '150px',
+    padding: '0px',
+    margin: '0px',
+    minWidth: '100px',
     // height: '200px'
   },
   cardImg: {
-    padding: '2px'
     // height: '100%',
   },
   cardText: {

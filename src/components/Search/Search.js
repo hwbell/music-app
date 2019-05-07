@@ -8,6 +8,7 @@ import Albums from '../Search/Albums';
 
 // tools
 import { getWebToken } from '../../tools/getWebToken';
+import { getUsablePicUrl } from '../../tools/functions';
 
 const fetch = require("node-fetch");
 
@@ -72,6 +73,12 @@ class Search extends Component {
           playlists
         });
 
+        albums.forEach((album) => {
+          const img = new Image();
+          img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
+          console.log(img.src)
+        });
+
       })
       .catch((e) => console.log(e))
 
@@ -99,13 +106,13 @@ class Search extends Component {
       <div className="col" style={styles.container}>
 
         {/* search bar */}
-        <SearchInput 
+        <SearchInput
           query={this.state.query}
           handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}/>
+          handleSubmit={this.handleSubmit} />
 
         {/* album section */}
-        <Albums albumsData={this.state.albums}/>
+        {this.state.albums && <Albums albumsData={this.state.albums} />}
 
         {/* songs section */}
 
