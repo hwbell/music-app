@@ -20,18 +20,20 @@ class Albums extends Component {
   }
 
   render() {
+
     let album = this.props.album;
-    let picUrl = album.attributes.artwork.url;
-    let 
+    let artUrl = album.attributes.artwork.url;
+
+    // slice off the ending '{w}x{h}bb.jpeg' part of the url. we can replace it
+    // with '200x200bb.jpeg' for example. width + height can be assigned this way
+    let slicePoint = artUrl.indexOf('{w}');
+
+    let picUrl = artUrl.slice(0, slicePoint) + '1000x1000bb.jpeg';
 
     return (
 
       <Card style={{ border: 'none' }}>
         <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
-
-        <CardImgOverlay style={styles.imageOverlay}>
-          <CardText style={styles.cardText}>{title}</CardText>
-        </CardImgOverlay>
 
       </Card>
 
@@ -41,8 +43,6 @@ class Albums extends Component {
 
 const styles = {
   container: {
-    // 
-    height: '400px'
   },
   cardImg: {
     width: '100%',

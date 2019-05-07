@@ -8,5 +8,28 @@ body {
 }
 
 .title {
-  color: rgb(203, 26, 219);
+  color: rgb(84, 26, 219);
+}
+
+/* .album-card-container {
+  box-shadow: 1px 1px 1px 1px rgba(20, 4, 58, 0.4);
+} */
+
+/* for the ReactCSSTransitionGroup animations */
+.example-enter {
+  opacity: 0.1;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.example-leave {
+  opacity: 0.5;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

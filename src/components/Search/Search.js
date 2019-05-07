@@ -105,7 +105,7 @@ class Search extends Component {
           handleSubmit={this.handleSubmit}/>
 
         {/* album section */}
-          <Albums albumsData={this.state.albums}/>
+        <Albums albumsData={this.state.albums}/>
 
         {/* songs section */}
 
