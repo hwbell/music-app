@@ -76,7 +76,7 @@ class Search extends Component {
         albums.forEach((album) => {
           const img = new Image();
           img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
-          console.log(img.src)
+          // console.log(img.src)
         });
 
       })

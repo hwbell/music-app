@@ -1,3 +1,5 @@
+const {convertMillisToStandard} = require('../tools/functions');
+
 const fetch = require("node-fetch");
 const jwt = require("jsonwebtoken");
 
@@ -53,10 +55,12 @@ fetch(searchUrl, {
       console.log(`checking ${i}`)
       albumSongs.forEach((song) => {
         if (i === song.attributes.trackNumber) {
-          sortedSongs.push([song.attributes.name, song.attributes.trackNumber])
+          let { trackNumber, name, durationInMillis } = song.attributes;
+          sortedSongs.push([trackNumber, name, convertMillisToStandard(durationInMillis)])
         }
       });
     }
     console.log(sortedSongs)
+    console.log(albumSongs[0])
   })
   .catch((e) => console.log(e))

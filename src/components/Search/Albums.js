@@ -9,6 +9,7 @@ import { Button } from 'reactstrap';
 
 // tools
 import { getUsablePicUrl } from '../../tools/functions';
+import { getWebToken } from '../../tools/getWebToken';
 
 // 
 class Albums extends Component {
@@ -22,19 +23,92 @@ class Albums extends Component {
     this.renderCards = this.renderCards.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.prefetchImages = this.prefetchImages.bind(this);
+    this.fetchSongList = this.fetchSongList.bind(this);
   }
 
   componentDidMount() {
-    // prefetchImages();
+    // prefetch the images
+    this.prefetchImages();
+    
+    // get the song list for the active album
+    let album = this.props.albumsData[this.state.activeIndex]
+    // console.log(this.props.albumsData)
+
+    this.fetchSongList(album.attributes.name);
+
   }
 
   // do this to pre-fetch the images, so they dont delay
   prefetchImages() {
-    // this.props.albumsData.forEach((album) => {
-    //   const img = new Image();
-    //   img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
-    //   console.log(img.src)
-    // });
+    this.props.albumsData.forEach((album) => {
+      const img = new Image();
+      img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
+      // console.log(img.src)
+    });
+  }
+
+  // this will be a new search of the album selected, since we don't get the actual tracks from 
+  // the album attributes. Make search fetch for songs only, using the album name as the query,
+  // and grab only the songs that have that album name 
+  fetchSongList(query) {
+
+    const self = this;
+
+    console.log(`getting songs for the album: `);
+    console.log(query.toLowerCase())
+
+    // this is the form specified by apple
+    let jwtToken = getWebToken();
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`
+    }
+
+    // for a search query
+    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs`;
+
+    fetch(searchUrl, {
+      method: 'GET',
+      headers
+    })
+      .then(res => res.json())
+      .then((json) => {
+
+        console.log(`${json.results.songs.data.length} total songs returned`)
+        const songs = json.results.songs.data;
+
+        let matches = 0;
+        let albumSongs = [];
+        songs.map((song) => {
+          let album = song.attributes.albumName;
+
+          // not sure if the toLowerCase() is needed but seems safer
+          if (album.toLowerCase() === query.toLowerCase()) {
+            matches++;
+            albumSongs.push(song);
+          }
+        })
+        console.log(`${matches} matching songs`)
+
+        // sort the songs by looking for i in the trackNumber property
+        let sortedSongs = [];
+
+        for (let i = 1; i < albumSongs.length + 1; i++) {
+          // console.log(`checking ${i}`)
+          albumSongs.forEach((song) => {
+            if (i === song.attributes.trackNumber) {
+              sortedSongs.push(song);
+            }
+          });
+        }
+        console.log(sortedSongs)
+
+        self.setState({
+          songList: sortedSongs
+        })
+
+      })
+      .catch((e) => console.log(e))
   }
 
   toggleExpanded() {
@@ -43,9 +117,12 @@ class Albums extends Component {
     })
   }
 
-  handleClick(key) {
+  handleClick(index) {
     this.setState({
-      activeIndex: key
+      activeIndex: index
+    }, () => {
+      let album = this.props.albumsData[this.state.activeIndex]
+      this.fetchSongList(album.attributes.name);
     })
   }
 
@@ -67,10 +144,14 @@ class Albums extends Component {
           let tooLong = fullName.length > 40;
 
           let title = tooLong ? fullName.toLowerCase().slice(0, 40) + '...' : fullName.toLowerCase();
-          
+
           return (
 
-            <AlbumCard handleClick={this.handleClick} key={i} index={i} title={title} picUrl={picUrl} />
+            <AlbumCard key={i}
+              handleClick={this.handleClick} 
+              index={i} 
+              title={title} 
+              picUrl={picUrl}/>
           )
         }
 
@@ -92,7 +173,10 @@ class Albums extends Component {
 
           {/* the featured album - whichever is currently selected. defaults to first in list */}
           <div className="col-sm-6">
-            <AlbumDetail album={this.props.albumsData[activeIndex]} />
+            <AlbumDetail
+              album={this.props.albumsData[activeIndex]}
+              songList={this.state.songList}
+            />
           </div>
 
           {/* the album cards to select from */}
