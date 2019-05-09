@@ -85,7 +85,7 @@ const styles = {
     textAlign: 'center',
     color: 'white',
     fontWeight: 'bolder',
-    fontSize: '14px',
+    fontSize: '12px',
     // margin: 'auto auto'
   },
   imageOverlay: {

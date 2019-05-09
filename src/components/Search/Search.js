@@ -5,10 +5,30 @@ import 'bootstrap/dist/css/bootstrap.css';
 // components
 import SearchInput from '../Search/SearchInput'
 import Albums from '../Search/Albums';
-
+import Songs from '../Search/Songs';
+import Artists from '../Search/Artists';
+import { Spinner } from 'reactstrap';
 // tools
 import { getWebToken } from '../../tools/getWebToken';
 import { getUsablePicUrl } from '../../tools/functions';
+
+// set up some useful state objs
+const initialState = {
+  songs: null,
+  artists: null,
+  albums: null,
+  stations: null,
+  query: ''
+}
+
+// while getting new results
+const loadingState = {
+  songs: null,
+  artists: null,
+  albums: null,
+  stations: null,
+  showLoading: true
+}
 
 const fetch = require("node-fetch");
 
@@ -18,18 +38,18 @@ class Search extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      query: ''
-    }
+    this.state = initialState;
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleNewSelection = this.handleNewSelection.bind(this);
   }
 
   componentDidMount() {
     // this.fetchSearch();
   }
 
-  // for the Top songs and albums
+  // for searches
   fetchSearch(query) {
 
     const self = this;
@@ -41,7 +61,7 @@ class Search extends Component {
     }
 
     // for a search query
-    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,playlists`;
+    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists`;
 
     fetch(searchUrl, {
       method: 'GET',
@@ -59,18 +79,16 @@ class Search extends Component {
         let songs = json.results.songs.data;
         let albums = json.results.albums.data;
         let artists = json.results.artists.data;
-        let playlists = json.results.playlists.data;
 
         console.log(songs.length + " songs returned");
         console.log(albums.length + " albums returned");
         console.log(artists.length + " artists returned");
-        console.log(playlists.length + " playlists returned");
 
         self.setState({
           songs,
           albums,
           artists,
-          playlists
+          showLoading: false
         });
 
         albums.forEach((album) => {
@@ -85,12 +103,15 @@ class Search extends Component {
   }
 
   // handleSubmit and handleChange will be passed to the SearchInput component
-  // handleSubmit fires the search for new content
+  // handleSubmit fires the search for the current query
   handleSubmit(e) {
     console.log(`search fired => ${this.state.query}`)
     e.preventDefault();
 
-    this.fetchSearch(this.state.query);
+    this.setState(loadingState, () => {
+      this.fetchSearch(this.state.query);
+    })
+
   }
 
   // handleChange changes the value of the current query
@@ -100,10 +121,26 @@ class Search extends Component {
     });
   }
 
+  // this is a separate handler for when the user clicks a new artist to search
+  // easier to separate from handleSubmit 
+  handleNewSelection(query) {
+    this.setState({
+      query,
+    }, () => {
+      this.setState(loadingState, () => {
+        this.fetchSearch(this.state.query);
+      })
+    });
+  }
+
   render() {
     return (
 
       <div className="col" style={styles.container}>
+
+        {this.state.showLoading &&
+          <Spinner style={styles.spinner} color="primary" />
+        }
 
         {/* search bar */}
         <SearchInput
@@ -111,12 +148,17 @@ class Search extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} />
 
-        {/* album section */}
-        {this.state.albums && <Albums albumsData={this.state.albums} />}
-
         {/* songs section */}
+        {this.state.songs &&
+          <Songs width="70vw" title="songs" songsData={this.state.songs} />}
 
-        {/* playlist section */}
+        {/* artists section */}
+        {this.state.artists &&
+          <Artists title="artists" handleClick={this.handleNewSelection} artistsData={this.state.artists} />}
+
+        {/* album section */}
+        {this.state.albums &&
+          <Albums title="songs" albumsData={this.state.albums} />}
 
       </div>
 
@@ -128,7 +170,11 @@ const styles = {
   container: {
     padding: '5px'
   },
-
+  spinner: {
+    position: 'absolute',
+    top: '35vh',
+    left: '45vw'
+  }
 
 }
 

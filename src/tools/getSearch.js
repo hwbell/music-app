@@ -20,10 +20,10 @@ const headers = {
   Authorization: `Bearer ${jwtToken}`
 }
 
-const query = 'roxy music';
+const query = 'mickey avalon';
 
 // for a search query
-const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,playlists`;
+const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists`;
 
 fetch(searchUrl, {
   method: 'GET',
@@ -36,23 +36,21 @@ fetch(searchUrl, {
   // for charts
   .then((json) => {
 
-    // console.log(json.results.albums.data)
+    console.log(json)
 
     let songs = json.results.songs.data;
     let albums = json.results.albums.data;
     let artists = json.results.artists.data;
-    let playlists = json.results.playlists.data;
 
     console.log(songs.length + " songs returned");
     console.log(albums.length + " albums returned");
     console.log(artists.length + " artists returned");
-    console.log(playlists.length + " playlists returned");
 
-    [songs, albums, artists, playlists].forEach((obj) => {
+    [songs, albums, artists].forEach((obj) => {
       console.log(`*************************Top ${obj[0].type}***********************`);
 
-      console.log(obj[0].attributes);
-      
+      console.log(obj[0])
+
       let songData = obj.map((item, i) => {
         let { name, url, genreNames } = item.attributes;
         let { id, type, href, attributes } = item;

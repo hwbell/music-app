@@ -15,13 +15,20 @@ class AlbumDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapse: true
+      showSongList: false
     }
+    this.toggleSongList = this.toggleSongList.bind(this);
     
   }
 
   componentDidMount() {
     // 
+  }
+
+  toggleSongList () {
+    this.setState({
+      showSongList: !this.state.showSongList
+    })
   }
 
   render() {
@@ -43,12 +50,16 @@ class AlbumDetail extends Component {
           <CardTitle style={styles.cardTitle}>{name}</CardTitle>
 
           <div className="row">
-            <CardText style={styles.cardText}>{artistName}</CardText>
-            <CardText style={styles.cardText}>{` -${releaseDate.slice(0, 4)}`}</CardText>
+            <CardText style={styles.cardText}>{`${artistName} -${releaseDate.slice(0, 4)}`}</CardText>
           </div>
 
           {/* the song list with toggler. just pass it the songList when its ready */}
-          { this.props.songList && <SongList songList={this.props.songList} />}
+          { this.props.songList && 
+            <SongList isSmall={true} 
+              collapse={this.state.showSongList}
+              toggle={this.toggleSongList}
+              songList={this.props.songList}
+              title="show tracks" />}
 
           {/* sometimes these arent present */}
           {editorialNotes &&
@@ -92,12 +103,13 @@ const styles = {
     textAlign: 'center',
     color: 'whitesmoke',
     fontSize: 'calc(12px + 0.5vw)',
-    padding: '3px'
+    padding: '3px',
   },
   cardDesc: {
     textAlign: 'left',
     color: 'whitesmoke',
-    fontSize: 'calc(10px + 0.5vw)'
+    fontSize: 'calc(10px + 0.5vw)',
+    marginBottom: '15px'
   },
 
 

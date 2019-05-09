@@ -28,14 +28,15 @@ class SearchInput extends Component {
           style={styles.searchHolder}>
 
           <InputGroup>
-            <Input placeholder="search" style={styles.searchInput}
+            <Input placeholder={this.props.query || "search"} 
+              value={this.props.query}
+              style={styles.searchInput}
               onChange={(e) => this.props.handleChange(e.target.value)}
             />
 
             <Button color="link"
               type="submit"
-              style={styles.button}
-              className={this.state.buttonClass}>
+              style={styles.button}>
               <i className="fas fa-search" style={styles.icon}></i>
             </Button>
           </InputGroup>

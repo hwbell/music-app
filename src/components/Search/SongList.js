@@ -6,59 +6,81 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Card, ListGroup, ListGroupItem, Collapse, Button, CardBody } from 'reactstrap';
 
 // tools
-import { convertMillisToStandard } from '../../tools/functions';
+import { getUsablePicUrl, convertMillisToStandard } from '../../tools/functions';
 
 // 
-class Genres extends Component {
+class SongsList extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      collapse: true
+      expanded: false
     }
-    this.toggle = this.toggle.bind(this);
     this.renderSongs = this.renderSongs.bind(this);
+    this.toggleExpanded = this.toggleExpanded.bind(this);
   }
 
   componentDidMount() {
 
   }
-  // this will be called at the end of the fetch call, so it won't expand until we have the songs
-  toggle() {
-    this.setState(state => ({ collapse: !state.collapse }));
+
+  // to increase / decrease the number shown 
+  toggleExpanded() {
+    this.setState({
+      expanded: !this.state.expanded
+    })
   }
 
-  renderSongs() {
+  renderSongs(songsData, length) {
     return (
       <ListGroup style={styles.listGroup}>
-        {this.props.songList.map((song, i) => {
+        {songsData.map((song, i) => {
 
-          let { trackNumber } = song.attributes;
-          let tooLong = song.attributes.name.length > 14;
-          let name = tooLong ? `${song.attributes.name.toString().slice(0, 14)} ...` : song.attributes.name;
-          let duration = convertMillisToStandard(song.attributes.durationInMillis);
+          if (i < length) {
+            let { trackNumber } = song.attributes;
+            let tooLong = song.attributes.name.length > 14;
+            let name = tooLong ? `${song.attributes.name.toString().slice(0, 14)} ...` : song.attributes.name;
+            let duration = convertMillisToStandard(song.attributes.durationInMillis);
+            let imageSrc = getUsablePicUrl(song.attributes.artwork.url, 40);
 
-          return (
-            <ListGroupItem key={i} style={styles.listGroupItem}>
-              <p style={styles.listText}>{`${trackNumber}`}</p>
-              <p style={styles.listText}>{`${name}`}</p>
-              <p style={styles.listText}>{`${duration}`}</p>
-            </ListGroupItem>
-          )
+            return (
+              <ListGroupItem key={i} style={styles.listGroupItem}>
+                <p style={styles.listText}>{`${trackNumber}`}</p>
+                <p style={styles.listText}>{`${name}`}</p>
+                <p style={styles.listText}>{`${duration}`}</p>
+              </ListGroupItem>
+            )
+          }
+
         })}
       </ListGroup>
     )
   }
 
   render() {
+
+    let collapseStyle = { width: this.props.width || '100%' };
+
     return (
 
       <div style={styles.container}>
-        <Button className="button-purple" style={styles.button} onClick={this.toggle}>show tracks</Button>
-        <Collapse style={{width: '100%'}} isOpen={!this.state.collapse}>
+
+        {this.props.songList.length > 0 &&
+          <Button className="button-purple"
+            style={collapseStyle}
+            onClick={this.props.toggle}>
+            {this.props.title}</Button>}
+
+        <Collapse style={collapseStyle} isOpen={this.props.collapse}>
           <div style={styles.card}>
-            {this.renderSongs()}
+            {this.renderSongs(this.props.songList, this.props.songList.length)}
           </div>
+
+          {/* <Button className='button-purple'
+            style={styles.button}
+            onClick={this.toggleExpanded}>
+            {this.state.expanded ? 'less' : 'more'}
+          </Button> */}
         </Collapse>
       </div>
 
@@ -75,9 +97,6 @@ const styles = {
     alignItems: 'center',
     marginBottom: '1rem'
   },
-  button: {
-    width: '100%'
-  },
   card: {
     width: '100%'
   },
@@ -86,7 +105,7 @@ const styles = {
   },
   listGroupItem: {
     width: '100%',
-    height: '40px',
+    height: '50px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -94,11 +113,11 @@ const styles = {
   },
   listText: {
     paddingTop: '8px',
-    fontSize: '14px',
+    fontSize: 'calc(10px + 0.5vw)',
   }
 
 }
 
-export default Genres;
+export default SongsList;
 
 

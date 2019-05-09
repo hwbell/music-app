@@ -44,7 +44,7 @@ const styles = {
     margin: '40px auto'
   },
   titleText: {
-    fontSize: 'calc(34px + 1vw)',
+    fontSize: 'calc(30px + 1vw)',
   }
 
 

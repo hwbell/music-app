@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 //  components
 import AlbumCard from './AlbumCard';
 import AlbumDetail from './AlbumDetail';
-import { Button } from 'reactstrap';
+import { Button, Collapse } from 'reactstrap';
 
 // tools
 import { getUsablePicUrl } from '../../tools/functions';
@@ -30,12 +30,9 @@ class Albums extends Component {
   componentDidMount() {
     // prefetch the images
     this.prefetchImages();
-    
-    // get the song list for the active album
-    let album = this.props.albumsData[this.state.activeIndex]
-    // console.log(this.props.albumsData)
 
-    this.fetchSongList(album.attributes.name);
+    // get the song list for the active album
+    this.handleClick(0);
 
   }
 
@@ -133,7 +130,7 @@ class Albums extends Component {
 
       albumsData.map((album, i) => {
 
-        if (i < length) {
+        if (i < length && !!album) {
 
           let artUrl = album.attributes.artwork.url;
 
@@ -148,10 +145,10 @@ class Albums extends Component {
           return (
 
             <AlbumCard key={i}
-              handleClick={this.handleClick} 
-              index={i} 
-              title={title} 
-              picUrl={picUrl}/>
+              handleClick={this.handleClick}
+              index={i}
+              title={title}
+              picUrl={picUrl} />
           )
         }
 
@@ -176,6 +173,7 @@ class Albums extends Component {
             <AlbumDetail
               album={this.props.albumsData[activeIndex]}
               songList={this.state.songList}
+              collapse={true}
             />
           </div>
 
@@ -183,15 +181,20 @@ class Albums extends Component {
           <div className="col-sm-6">
 
             <div className="row" style={styles.cardsHolder}>
-              {this.state.expanded ?
-                this.renderCards(this.props.albumsData, this.props.albumsData.length)
-                : this.renderCards(this.props.albumsData, 9)
-              }
+              {this.renderCards(this.props.albumsData, 9)}
             </div>
+
+            <Collapse style={{width: '100%'}} isOpen={this.state.expanded}>
+              <div className="row" style={styles.cardsHolder}>
+                {this.renderCards(this.props.albumsData.slice(10), 25)}
+              </div>
+            </Collapse>
 
             <Button className='button-purple' style={styles.button} onClick={this.toggleExpanded}>
               {this.state.expanded ? 'less' : 'more'}
             </Button>
+
+
 
           </div>
 

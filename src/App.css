@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Manjari');
 
 * {
   font-family: Manjari;
@@ -41,12 +42,17 @@ body {
 
   /* AlbumDetail component */
 .album-detail-card {
-  height: 550px;
-  overflow-y: auto;
+  /* height: 550px;
+  overflow-y: auto; */
   transition:  all 0.3s ease;
   background: -webkit-gradient(linear, left top, right bottom, from(rgb(157, 102, 253)), to(rgb(0, 0, 0)));
   box-shadow: 2px 2px 5px 1px rgb(54, 10, 110);
 }
+
+/* the Songs component */
+/* .song-image {
+  
+} */
 
 /* for the ReactCSSTransitionGroup animations */
 .example-enter {
