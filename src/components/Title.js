@@ -28,7 +28,7 @@ class Title extends Component {
         {
           this.props.text ?
             <p className="title" style={styles.titleText}>{this.props.text}</p>
-            : <p className="title" style={styles.titleText}>find the music <strong>you</strong> want</p>
+            : <p className="title" style={styles.titleText}>find your music</p>
 
         }
 

@@ -105,14 +105,15 @@ const styles = {
   },
   listGroupItem: {
     width: '100%',
-    height: '50px',
+    height: '40px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   listText: {
-    paddingTop: '8px',
+    padding: '0px',
+    paddingTop: '5px',
     fontSize: 'calc(10px + 0.5vw)',
   }
 

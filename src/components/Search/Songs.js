@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Card, ListGroup, ListGroupItem, Collapse, Button, CardBody } from 'reactstrap';
 
 // tools
-import { getUsablePicUrl, convertMillisToStandard } from '../../tools/functions';
+import { getUsablePicUrl, convertMillisToStandard, shortenStr } from '../../tools/functions';
 
 // 
 class SongsList extends Component {
@@ -46,9 +46,11 @@ class SongsList extends Component {
           if (i < length) {
             let { trackNumber, artwork, name, artistName } = song.attributes;
 
-            let tooLong = name.length > 20;
-            if (tooLong) {
-              name = `${song.attributes.name.toString().slice(0, 20)} ...`;
+            if (name.length > 16) {
+              name = `${name.slice(0, 16)} ...`;
+            }
+            if (artistName.length > 16) {
+              artistName = `${artistName.slice(0, 16)} ...`;
             }
 
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
@@ -63,10 +65,12 @@ class SongsList extends Component {
                     <p className="" style={styles.listText}>{`${artistName}`}</p>
                   </div>
 
-                  <p className="col-2 col-sm-3" style={styles.listText}>{`${duration}`}</p>
-                  <div className="col-2 col-sm-3" style={styles.imageHolder}>
+
+                  <div className="col-6" style={styles.imageHolder}>
+                    <p className="" style={styles.listText}>{`${duration}`}</p>
                     <img style={styles.image} src={imageSrc}></img>
                   </div>
+
                 </div>
               </ListGroupItem>
             )
@@ -86,17 +90,17 @@ class SongsList extends Component {
       <div style={styles.container}>
 
         <p className="title" style={styles.titleText}>{this.props.title}</p>
-          
+
         {this.renderSongs(songsData, 3)}
 
-        <Collapse style={{ width: '100%', marginLeft: '10%' }} isOpen={this.state.expanded}>
+        <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
           {this.renderSongs(songsData.slice(3), songsData.length)}
         </Collapse>
 
-        {songsData.length > 3 &&
-            <Button className='button-purple song-image col' style={styles.button} onClick={this.toggleExpanded}>
-              {this.state.expanded ? 'show less' : 'show all songs'}
-            </Button>}
+        {this.props.songsData.length > 3 &&
+          <Button className='button-purple' style={styles.button} onClick={this.toggleExpanded}>
+            {this.state.expanded ? 'show less' : 'show all songs'}
+          </Button>}
 
       </div>
 
@@ -106,7 +110,7 @@ class SongsList extends Component {
 
 const styles = {
   container: {
-    width: '100%',
+    width: '95%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -117,38 +121,45 @@ const styles = {
     width: '100%'
   },
   listGroup: {
-    width: '90%',
+    width: '100%',
   },
   listGroupItem: {
-    // width: '90%',
-    // height: '50px',
+    maxHeight: 'calc(70px + 2vw)',
   },
   titleText: {
     fontSize: 'calc(28px + 0.5vw)',
   },
   listText: {
-    // paddingTop: '8px',
-    fontSize: 'calc(10px + 0.5vw)',
+    margin: '0px',
+    padding: '0px',
+    fontSize: 'calc(12px + 0.5vw)',
   },
   songText: {
-    fontSize: 'calc(12px + 0.5vw)',
+    padding: '0px',
+    margin: '0px',
+    fontSize: 'calc(14px + 0.5vw)',
     fontWeight: 'bold',
     // color: '#E91E63'
 
   },
-  button: {
-    alignSelf: 'flex-start',
-    margin: '5vw',
-    width: '200px'
-  },
   imageHolder: {
-    height: '80px',
-    paddingRight: '20px'
+    // border: '1px solid',
+    height: '40px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // paddingRight: '20px'
   },
   image: {
-    height: '100%'
+    height: 'calc(45px + 1vw)',
+    width: 'calc(45px + 1vw'
   },
-
+  button: {
+    alignSelf: 'flex-start',
+    marginTop: '2vw',
+    width: '180px'
+  },
 }
 
 export default SongsList;

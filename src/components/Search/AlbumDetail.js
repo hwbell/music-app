@@ -33,6 +33,8 @@ class AlbumDetail extends Component {
 
   render() {
 
+    console.log(this.props.album.attributes)
+
     let { artistName, name, artwork, recordLabel, releaseDate, editorialNotes } = this.props.album.attributes;
 
     // slice off the ending '{w}x{h}bb.jpeg' part of the url. we can replace it
@@ -44,7 +46,7 @@ class AlbumDetail extends Component {
     return (
 
       <Card className="album-detail-card" style={styles.container}>
-        <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
+        <img style={styles.cardImg} src={picUrl} alt="Card image cap" />
 
         <div style={styles.textContainer}>
           <CardTitle style={styles.cardTitle}>{name}</CardTitle>
@@ -79,18 +81,23 @@ class AlbumDetail extends Component {
 const styles = {
   container: {
     border: 'none',
-    width: '100%'
+    width: '100%',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'space-evenly',
+    // alignItems: 'center'
   },
   cardImg: {
     width: '100%',
   },
   textContainer: {
     width: '85%',
-    margin: 'auto auto',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    margin: '5px auto',
+    // display: 'flex',
+    // // flexGrow: 1,
+    // flexDirection: 'column',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   cardTitle: {
     marginTop: '15px',
@@ -100,9 +107,9 @@ const styles = {
     fontSize: 'calc(14px + 0.5vw)',
   },
   cardText: {
-    textAlign: 'center',
+    margin: '15px',
     color: 'whitesmoke',
-    fontSize: 'calc(12px + 0.5vw)',
+    fontSize: 'calc(14px + 0.5vw)',
     padding: '3px',
   },
   cardDesc: {

@@ -5,20 +5,8 @@
 }
 
 body {
-  background: whitesmoke;
-}
-
-.album-detail-card::-webkit-scrollbar { 
-  width: 8px;
-  height: 13px;
-  border-radius: 5px;
-  /* background-color: rgba(245, 245, 245, 0.3); */
-}
-
-.album-detail-card::-webkit-scrollbar-thumb { 
-  background-color: whitesmoke;
-  border-radius: 5px;
-  background-color: rgb(156, 154, 160);
+  background: rgb(251, 250, 255);
+  min-height: 120vh;
 }
 
 .title {
@@ -42,11 +30,24 @@ body {
 
   /* AlbumDetail component */
 .album-detail-card {
-  /* height: 550px;
-  overflow-y: auto; */
+  height: 600px;
+  overflow: auto;
   transition:  all 0.3s ease;
   background: -webkit-gradient(linear, left top, right bottom, from(rgb(157, 102, 253)), to(rgb(0, 0, 0)));
   box-shadow: 2px 2px 5px 1px rgb(54, 10, 110);
+}
+
+.album-detail-card::-webkit-scrollbar { 
+  width: 8px;
+  height: 13px;
+  border-radius: 5px;
+  /* background-color: rgba(245, 245, 245, 0.3); */
+}
+
+.album-detail-card::-webkit-scrollbar-thumb { 
+  background-color: whitesmoke;
+  border-radius: 5px;
+  background-color: rgb(156, 154, 160);
 }
 
 /* the Songs component */

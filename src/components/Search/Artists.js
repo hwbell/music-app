@@ -48,7 +48,7 @@ class Artists extends Component {
           console.log(artist) */}
 
           // get the first artwork available in the artists list of albums
-          // if there isnt one at all, skip that artist (prob change this later)
+          // if there isnt one at all, use the itunes icon
           let albumList = artist.relationships.albums.data;
           let artwork;
           for (let j = 0; j < albumList.length; j++) {
@@ -61,18 +61,18 @@ class Artists extends Component {
           }
 
           if (i < length) {
-            {/* console.log(`i with artwork: ${i}`) */ }
-            {/* console.log(artist) */}
+            // if we got an imageSrc above, use it. otherwise use the itunes icon
             let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
             let { name, genreNames, id } = artist.attributes;
+            
             return (
               <ListGroupItem key={i}>
 
                 <div className="row">
-                  <div className="col">
+                  <div className="col-6">
                     <img style={styles.image} src={imageSrc}></img>
                   </div>
-                  <div className="col">
+                  <div className="col-6" style={styles.nameHolder}>
 
                     <Button color="link"
                       style={styles.listText}
@@ -81,6 +81,7 @@ class Artists extends Component {
                     </Button>
 
                     <p style={styles.listText}>{`${genreNames}`}</p>
+
                   </div>
                 </div>
               </ListGroupItem>
@@ -135,7 +136,7 @@ class Artists extends Component {
 const styles = {
   container: {
     marginTop: '40px',
-    width: '100%',
+    width: '95%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -154,11 +155,12 @@ const styles = {
   },
   listGroupItem: {
     width: '100%',
-    // height: '50px',
+  },
+  nameHolder: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   image: {
     width: '80px',
@@ -166,12 +168,11 @@ const styles = {
   },
   button: {
     alignSelf: 'flex-start',
-    margin: '5vw',
-    width: '200px'
+    marginTop: '2vw',
+    width: '180px'
   },
   listText: {
-    // textAlign: 'left',
-    // paddingTop: '8px',
+    padding: '0px',
     fontSize: 'calc(18px + 0.5vw)',
   }
 

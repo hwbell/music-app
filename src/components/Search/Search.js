@@ -158,7 +158,7 @@ class Search extends Component {
 
         {/* album section */}
         {this.state.albums &&
-          <Albums title="songs" albumsData={this.state.albums} />}
+          <Albums title="albums" albumsData={this.state.albums} />}
 
       </div>
 
@@ -168,7 +168,11 @@ class Search extends Component {
 
 const styles = {
   container: {
-    padding: '5px'
+    padding: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   spinner: {
     position: 'absolute',

@@ -104,7 +104,7 @@ class TopCharts extends Component {
     let picUrl = artUrl.slice(0, slicePoint) + '1000x1000bb.jpeg';
 
     return (
-      <div className="col" style={styles.cardContainer}>
+      <div className="col-sm-6" style={styles.cardContainer}>
         <Card style={{ border: 'none' }}>
           <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
           <CardImgOverlay style={styles.imageOverlay}>
@@ -160,12 +160,14 @@ const styles = {
     padding: '5px'
   },
   cardsHolder: {
-    maxWidth: '900px',
+    // maxWidth: '900px',
     margin: 'auto auto'
     // minWidth: '300px'
   },
   cardContainer: {
-    // width: '300px',
+    minWidth: '350px',
+    maxWidth: '600px',
+    margin: 'auto auto'
     // height: '300px',
   },
   cardImg: {

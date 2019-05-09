@@ -30,10 +30,10 @@ class Albums extends Component {
   componentDidMount() {
     // prefetch the images
     this.prefetchImages();
+    // console.log(this.props.albumsData[0])
 
     // get the song list for the active album
     this.handleClick(0);
-
   }
 
   // do this to pre-fetch the images, so they dont delay
@@ -53,7 +53,7 @@ class Albums extends Component {
     const self = this;
 
     console.log(`getting songs for the album: `);
-    console.log(query.toLowerCase())
+    console.log(query)
 
     // this is the form specified by apple
     let jwtToken = getWebToken();
@@ -61,8 +61,8 @@ class Albums extends Component {
       Authorization: `Bearer ${jwtToken}`
     }
 
-    // for a search query
-    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs`;
+    // for an album query
+    const searchUrl = `https://api.music.apple.com/v1/catalog/us/albums/${query}`;
 
     fetch(searchUrl, {
       method: 'GET',
@@ -71,40 +71,13 @@ class Albums extends Component {
       .then(res => res.json())
       .then((json) => {
 
-        console.log(`${json.results.songs.data.length} total songs returned`)
-        const songs = json.results.songs.data;
-
-        let matches = 0;
-        let albumSongs = [];
-        songs.map((song) => {
-          let album = song.attributes.albumName;
-
-          // not sure if the toLowerCase() is needed but seems safer
-          if (album.toLowerCase() === query.toLowerCase()) {
-            matches++;
-            albumSongs.push(song);
-          }
-        })
-        console.log(`${matches} matching songs`)
-
-        // sort the songs by looking for i in the trackNumber property
-        let sortedSongs = [];
-
-        for (let i = 1; i < albumSongs.length + 1; i++) {
-          // console.log(`checking ${i}`)
-          albumSongs.forEach((song) => {
-            if (i === song.attributes.trackNumber) {
-              sortedSongs.push(song);
-            }
-          });
-        }
-        console.log(sortedSongs)
-
+        console.log(json.data[0].relationships.tracks.data)
         self.setState({
-          songList: sortedSongs
+          songList: json.data[0].relationships.tracks.data
         })
 
       })
+
       .catch((e) => console.log(e))
   }
 
@@ -115,11 +88,12 @@ class Albums extends Component {
   }
 
   handleClick(index) {
+    console.log(this.props.albumsData)
     this.setState({
       activeIndex: index
     }, () => {
       let album = this.props.albumsData[this.state.activeIndex]
-      this.fetchSongList(album.attributes.name);
+      this.fetchSongList(album.id);
     })
   }
 
@@ -133,7 +107,7 @@ class Albums extends Component {
         if (i < length && !!album) {
 
           let artUrl = album.attributes.artwork.url;
-
+          let id = album.attributes.id;
           // get a usable url with real size
           let picUrl = getUsablePicUrl(artUrl, 500);
 
@@ -147,6 +121,7 @@ class Albums extends Component {
             <AlbumCard key={i}
               handleClick={this.handleClick}
               index={i}
+              id={id}
               title={title}
               picUrl={picUrl} />
           )
@@ -164,12 +139,14 @@ class Albums extends Component {
 
     return (
 
-      <div className="container" style={styles.container}>
+      <div className="" style={styles.container}>
+
+        <p className="title" style={styles.titleText}>{this.props.title}</p>
 
         <div className="row">
 
           {/* the featured album - whichever is currently selected. defaults to first in list */}
-          <div className="col-sm-6">
+          <div className="col-sm-8 col-md-6">
             <AlbumDetail
               album={this.props.albumsData[activeIndex]}
               songList={this.state.songList}
@@ -178,13 +155,13 @@ class Albums extends Component {
           </div>
 
           {/* the album cards to select from */}
-          <div className="col-sm-6">
+          <div className="col-sm-4 col-md-6">
 
             <div className="row" style={styles.cardsHolder}>
               {this.renderCards(this.props.albumsData, 9)}
             </div>
 
-            <Collapse style={{width: '100%'}} isOpen={this.state.expanded}>
+            <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
               <div className="row" style={styles.cardsHolder}>
                 {this.renderCards(this.props.albumsData.slice(10), 25)}
               </div>
@@ -208,10 +185,19 @@ class Albums extends Component {
 
 const styles = {
   container: {
-    // border: '1px solid grey'
-    // height: '400px'
+    // margin: '4vw'
+    width: '90%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '1rem'
+  },
+  titleText: {
+    fontSize: 'calc(28px + 0.5vw)',
   },
   cardsHolder: {
+    width: '100%',
     maxWidth: '1200px',
     margin: 'auto auto'
     // minWidth: '300px'

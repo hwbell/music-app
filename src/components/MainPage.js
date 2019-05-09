@@ -31,13 +31,10 @@ class MainPage extends Component {
         <Search />
 
         {/* display the top song and album of the day, with the main icon */}
-        {/* <TopCharts /> */}
+        <TopCharts />
 
         {/* display the small icon albums (not the top 3) from the search */}
         {/* <RestOfAlbums /> */}
-
-        {/* display the top albums from the search */}
-        {/* <TopAlbums /> */}
 
       </div>
     );
