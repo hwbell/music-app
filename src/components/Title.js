@@ -20,6 +20,8 @@ class Title extends Component {
   }
 
   render() {
+
+
     return (
 
       <div className="text-center" style={styles.container}>
@@ -27,8 +29,8 @@ class Title extends Component {
         {/* We'll do the top title if no text is provided */}
         {
           this.props.text ?
-            <p className="title" style={styles.titleText}>{this.props.text}</p>
-            : <p className="title" style={styles.titleText}>find your music</p>
+            <p className={this.props.className || "title"} style={styles.titleText}>{this.props.text}</p>
+            : <p className={this.props.className || "title"} style={styles.titleText}>find your music</p>
 
         }
 

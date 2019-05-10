@@ -132,12 +132,12 @@ const styles = {
   listText: {
     margin: '0px',
     padding: '0px',
-    fontSize: 'calc(12px + 0.5vw)',
+    fontSize: 'calc(10px + 0.5vw)',
   },
   songText: {
     padding: '0px',
     margin: '0px',
-    fontSize: 'calc(14px + 0.5vw)',
+    fontSize: 'calc(12px + 0.5vw)',
     fontWeight: 'bold',
     // color: '#E91E63'
 

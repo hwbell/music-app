@@ -134,6 +134,9 @@ class Search extends Component {
   }
 
   render() {
+
+    let askToSeach = !this.state.songs && !this.state.showLoading;
+
     return (
 
       <div className="col" style={styles.container}>
@@ -147,6 +150,10 @@ class Search extends Component {
           query={this.state.query}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} />
+
+        {askToSeach &&
+          <p style={{fontSize: 'calc(16px+0.5vw)'}}>search for a song, artist, or album</p>
+        }
 
         {/* songs section */}
         {this.state.songs &&
@@ -168,10 +175,12 @@ class Search extends Component {
 
 const styles = {
   container: {
+    // border: '1px solid black',
+    minHeight: '500px',
     padding: '5px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   spinner: {

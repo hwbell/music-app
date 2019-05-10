@@ -105,7 +105,7 @@ class TopCharts extends Component {
 
     return (
       <div className="col-sm-6" style={styles.cardContainer}>
-        <Card style={{ border: 'none' }}>
+        <Card className="featured-detail-card" style={styles.card}>
           <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
           <CardImgOverlay style={styles.imageOverlay}>
 
@@ -136,7 +136,7 @@ class TopCharts extends Component {
 
       <div className="" style={styles.container}>
 
-        <Title text="explore more music"/>
+        <Title className="title-charts" text="explore more music"/>
 
         <div className="row" style={styles.cardsHolder}>
 
@@ -169,6 +169,9 @@ const styles = {
     maxWidth: '600px',
     margin: 'auto auto'
     // height: '300px',
+  },
+  card: {
+    border: 'none'
   },
   cardImg: {
     width: '100%',

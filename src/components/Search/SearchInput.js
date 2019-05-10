@@ -51,7 +51,7 @@ class SearchInput extends Component {
 
 const styles = {
   container: {
-    width: '300px',
+    width: '260px',
     marginBottom: '40px'
   },
   searchHolder: {

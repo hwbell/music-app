@@ -97,8 +97,10 @@ class Albums extends Component {
     })
   }
 
-  // renders the cards for the albums. control how many are rendered with the length argument
-  renderCards(albumsData, length) {
+  // renders the cards for the albums. control how many are rendered with the length argument. 
+  // the assigned index with increment up from startIndex. This is needed to render the full 
+  // list after the first 3
+  renderCards(albumsData, length, startIndex) {
 
     return (
 
@@ -120,7 +122,7 @@ class Albums extends Component {
 
             <AlbumCard key={i}
               handleClick={this.handleClick}
-              index={i}
+              index={startIndex+i}
               id={id}
               title={title}
               picUrl={picUrl} />
@@ -158,12 +160,12 @@ class Albums extends Component {
           <div className="col-sm-4 col-md-6">
 
             <div className="row" style={styles.cardsHolder}>
-              {this.renderCards(this.props.albumsData, 9)}
+              {this.renderCards(this.props.albumsData, 9, 0)}
             </div>
 
             <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
               <div className="row" style={styles.cardsHolder}>
-                {this.renderCards(this.props.albumsData.slice(10), 25)}
+                {this.renderCards(this.props.albumsData.slice(10), 25, 10)}
               </div>
             </Collapse>
 
@@ -186,7 +188,7 @@ class Albums extends Component {
 const styles = {
   container: {
     // margin: '4vw'
-    width: '90%',
+    width: '95%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

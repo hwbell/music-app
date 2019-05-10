@@ -18,14 +18,14 @@ class AlbumDetail extends Component {
       showSongList: false
     }
     this.toggleSongList = this.toggleSongList.bind(this);
-    
+
   }
 
   componentDidMount() {
     // 
   }
 
-  toggleSongList () {
+  toggleSongList() {
     this.setState({
       showSongList: !this.state.showSongList
     })
@@ -55,20 +55,19 @@ class AlbumDetail extends Component {
             <CardText style={styles.cardText}>{`${artistName} -${releaseDate.slice(0, 4)}`}</CardText>
           </div>
 
-          {/* the song list with toggler. just pass it the songList when its ready */}
-          { this.props.songList && 
-            <SongList isSmall={true} 
-              collapse={this.state.showSongList}
-              toggle={this.toggleSongList}
-              songList={this.props.songList}
-              title="show tracks" />}
-
           {/* sometimes these arent present */}
           {editorialNotes &&
             <CardText style={styles.cardDesc}>
               {ReactHtmlParser(editorialNotes.standard)}
             </CardText>}
 
+          {/* the song list with toggler. just pass it the songList when its ready */}
+          {this.props.songList &&
+            <SongList isSmall={true}
+              collapse={this.state.showSongList}
+              toggle={this.toggleSongList}
+              songList={this.props.songList}
+              title="show tracks" />}
         </div>
 
 
@@ -107,6 +106,7 @@ const styles = {
     fontSize: 'calc(14px + 0.5vw)',
   },
   cardText: {
+    textAlign: 'center',
     margin: '15px',
     color: 'whitesmoke',
     fontSize: 'calc(14px + 0.5vw)',

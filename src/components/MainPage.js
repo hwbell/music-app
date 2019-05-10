@@ -30,6 +30,8 @@ class MainPage extends Component {
         {/* display the search bar / results with song results on the left hand side */}
         <Search />
 
+        <hr></hr>
+
         {/* display the top song and album of the day, with the main icon */}
         <TopCharts />
 

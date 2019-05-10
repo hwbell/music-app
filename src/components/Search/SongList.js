@@ -65,12 +65,6 @@ class SongsList extends Component {
 
       <div style={styles.container}>
 
-        {this.props.songList.length > 0 &&
-          <Button className="button-purple"
-            style={collapseStyle}
-            onClick={this.props.toggle}>
-            {this.props.title}</Button>}
-
         <Collapse style={collapseStyle} isOpen={this.props.collapse}>
           <div style={styles.card}>
             {this.renderSongs(this.props.songList, this.props.songList.length)}
@@ -82,6 +76,13 @@ class SongsList extends Component {
             {this.state.expanded ? 'less' : 'more'}
           </Button> */}
         </Collapse>
+
+        {this.props.songList.length > 0 &&
+          <Button className="button-purple"
+            style={collapseStyle}
+            onClick={this.props.toggle}>
+            {this.props.title}</Button>}
+            
       </div>
 
     );

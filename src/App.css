@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Manjari');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 * {
-  font-family: Manjari;
+  font-family: Quicksand;
 }
 
 body {
   background: rgb(251, 250, 255);
-  min-height: 120vh;
+  min-height: 100vh;
 }
 
 .title {
@@ -50,10 +50,14 @@ body {
   background-color: rgb(156, 154, 160);
 }
 
-/* the Songs component */
-/* .song-image {
-  
-} */
+/* the TopCharts component */
+.featured-detail-card {
+  box-shadow: 1px 1px 5px 1px rgb(160, 15, 87);
+}
+.title-charts {
+  color: rgb(221, 21, 98);
+}
+
 
 /* for the ReactCSSTransitionGroup animations */
 .example-enter {

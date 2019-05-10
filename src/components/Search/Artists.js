@@ -75,7 +75,7 @@ class Artists extends Component {
                   <div className="col-6" style={styles.nameHolder}>
 
                     <Button color="link"
-                      style={styles.listText}
+                      style={styles.artistText}
                       onClick={() => this.props.handleClick(name)}>
                       {`${name}`}
                     </Button>
@@ -171,9 +171,13 @@ const styles = {
     marginTop: '2vw',
     width: '180px'
   },
+  artistText: {
+    padding: '0px',
+    fontSize: 'calc(14px + 0.5vw)',
+  },
   listText: {
     padding: '0px',
-    fontSize: 'calc(18px + 0.5vw)',
+    fontSize: 'calc(10px + 0.5vw)',
   }
 
 }
