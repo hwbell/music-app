@@ -36,6 +36,26 @@ const shortenStr = (str, length) => {
   }
 }
 
+const shuffle = (array) => {
+  return array.sort(() => Math.random() - 0.5);
+}
+let arr = [
+  {
+    one: 1
+  },
+  {
+    two: 2
+  },
+  {
+    three: 3
+  },
+  {
+    four: 4
+  },
+]
+let shuffled = shuffle(arr);
+console.log(shuffled)
+
 console.log(shortenStr('hello, how are you?', 20))
 console.log(shortenStr('hello, how are you? are you here? who am i talking toooooo??', 20))
 

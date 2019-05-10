@@ -8,9 +8,8 @@ import Title from '../Title';
 
 // tools
 import { getWebToken } from '../../tools/getWebToken';
-import { getUsablePicUrl } from '../../tools/functions'; 
 import Featured from './Featured';
-
+import CardCarousel from './CardCarousel';
 const fetch = require("node-fetch");
 
 // TopCharts is the master component for everything derived from pure api data
@@ -39,7 +38,7 @@ class TopCharts extends Component {
       Authorization: `Bearer ${jwtToken}`
     }
 
-    const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&genre=20&limit=10';
+    const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&genre=20&limit=100';
 
     fetch(chartsUrl, {
       method: 'GET',
@@ -118,8 +117,17 @@ class TopCharts extends Component {
 
         <Title className="title-charts" text="explore more music"/>
         
-        <Featured topAlbumsData={this.state.topAlbumsData} topSongsData={this.state.topSongsData}/>
+        {/* the two top cards */}
+        { this.state.topAlbumsData && this.state.topSongsData &&
+          <Featured topAlbumsData={this.state.topAlbumsData} topSongsData={this.state.topSongsData}/>}
         
+        {/* carousel of mixed albums */}
+        { this.state.topAlbumsData && 
+          <CardCarousel type="Albums" data={this.state.topAlbumsData}/>}
+
+        {/* carousel of mixed albums */}
+        { this.state.topSongsData && 
+          <CardCarousel type="Songs" data={this.state.topSongsData}/>}
 
 
         {/* {this.renderIcon()} */}
@@ -132,7 +140,7 @@ class TopCharts extends Component {
 
 const styles = {
   container: {
-    padding: '5px'
+    padding: '5px',
   },
   
   logo: {

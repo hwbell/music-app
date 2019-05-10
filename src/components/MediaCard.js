@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // style / animation
-import '../../App.css';
+import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -10,7 +10,7 @@ import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 
 
 // 
-class Genres extends Component {
+class MediaCard extends Component {
 
   constructor(props) {
     super(props);
@@ -39,9 +39,18 @@ class Genres extends Component {
   }
 
   render() {
+
+    let cardTextStyle = {
+      textAlign: 'center',
+      color: 'white',
+      fontWeight: 'bolder',
+      fontSize: this.props.fontSize || '12px',
+      // margin: 'auto auto'
+    };
+
     return (
 
-      <div className="album-card col-6 col-md-4" style={styles.cardContainer}>
+      <div className={this.props.className} style={styles.cardContainer}>
         <Card style={{ border: 'none' }}
           onClick={() => this.props.handleClick(this.props.index)}
           onMouseOver={this.onHover}
@@ -56,7 +65,7 @@ class Genres extends Component {
             transitionLeaveTimeout={300}>
             {this.state.overlay &&
               <CardImgOverlay style={styles.imageOverlay}>
-                <CardText style={styles.cardText}>{this.props.title}</CardText>
+                <CardText style={cardTextStyle}>{this.props.title}</CardText>
               </CardImgOverlay>}
           </ReactCSSTransitionGroup>
 
@@ -81,13 +90,7 @@ const styles = {
   cardImg: {
     // height: '100%',
   },
-  cardText: {
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bolder',
-    fontSize: '12px',
-    // margin: 'auto auto'
-  },
+  
   imageOverlay: {
     width: '100%',
     height: '100%',
@@ -101,6 +104,6 @@ const styles = {
 
 }
 
-export default Genres;
+export default MediaCard;
 
 

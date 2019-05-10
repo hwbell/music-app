@@ -31,7 +31,7 @@ class Featured extends Component {
     let picUrl = getUsablePicUrl(props.artwork.url, 1000)
 
     return (
-      <div className="col-sm-6" style={styles.cardContainer}>
+      <div className="col-6" style={styles.cardContainer}>
         <Card className="featured-detail-card" style={styles.card}>
           <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
           <CardImgOverlay style={styles.imageOverlay}>
@@ -52,9 +52,9 @@ class Featured extends Component {
     
     return (
 
-        <div className="row" style={styles.cardsHolder}>
-          {this.props.topAlbumsData && this.renderCard(this.props.topAlbumsData[randomInt])}
-          {this.props.topSongsData && this.renderCard(this.props.topSongsData[randomInt])}
+        <div className="row" style={styles.container}>
+          {this.renderCard(this.props.topAlbumsData[randomInt])}
+          {this.renderCard(this.props.topSongsData[randomInt])}
         </div>
 
     );
@@ -63,12 +63,13 @@ class Featured extends Component {
 
 const styles = {
   container: {
-    // 
-    width: '100%'
+    // maxWidth: '900px',
+    margin: '40px auto'
+    // minWidth: '300px'
   },
   cardContainer: {
-    minWidth: '350px',
-    maxWidth: '600px',
+    minWidth: '300px',
+    maxWidth: '450px',
     margin: 'auto auto'
     // height: '300px',
   },
@@ -78,11 +79,6 @@ const styles = {
   cardImg: {
     width: '100%',
     // height: '260px',
-  },
-  cardsHolder: {
-    // maxWidth: '900px',
-    margin: 'auto auto'
-    // minWidth: '300px'
   },
   
   imageOverlay: {

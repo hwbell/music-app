@@ -3,7 +3,7 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
-import AlbumCard from './AlbumCard';
+import MediaCard from '../../components/MediaCard';
 import AlbumDetail from './AlbumDetail';
 import { Button, Collapse } from 'reactstrap';
 
@@ -116,11 +116,12 @@ class Albums extends Component {
           let fullName = album.attributes.name;
           let tooLong = fullName.length > 40;
 
-          let title = tooLong ? fullName.toLowerCase().slice(0, 40) + '...' : fullName.toLowerCase();
+          let title = tooLong ? fullName.toLowerCase().slice(0, 30) + '...' : fullName.toLowerCase();
 
           return (
 
-            <AlbumCard key={i}
+            <MediaCard key={i}
+              className="album-card col-6 col-md-4"
               handleClick={this.handleClick}
               index={startIndex+i}
               id={id}
@@ -196,6 +197,7 @@ const styles = {
     marginBottom: '1rem'
   },
   titleText: {
+    alignSelf: 'flex-start',
     fontSize: 'calc(28px + 0.5vw)',
   },
   cardsHolder: {
