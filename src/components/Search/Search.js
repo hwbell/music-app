@@ -74,22 +74,38 @@ class Search extends Component {
       // for charts
       .then((json) => {
 
-        // console.log(json.results.albums.data)
+        // get these object via destructuring, then get rid of the ones that don't exist
+        let { songs, albums, artists } = json.results;
 
-        let songs = json.results.songs.data;
-        let albums = json.results.albums.data;
-        let artists = json.results.artists.data;
+        // initialize an object to store the results that exist
+        // initialize with showLoading: false so the loader can be eliminated when we get the data
+        // this way we only call this.setState({}) once below
+        let definedData = { showLoading: false };
+        
+        [songs, albums, artists].forEach((obj) => {
+          // check if it is defined
+          if (obj) {
+            let { data } = obj;
+            let { type } = data[0];
 
-        console.log(songs.length + " songs returned");
-        console.log(albums.length + " albums returned");
-        console.log(artists.length + " artists returned");
+            console.log(`*************************Top ${type}***********************`);
+            console.log(`${data.length} ${type} returned`)
+            console.log(`**********************************************************`);
 
-        self.setState({
-          songs,
-          albums,
-          artists,
-          showLoading: false
+            // throw it in the object with its type as the property name
+            definedData[`${type}`] = data;
+          }
+
         });
+        // let songs = json.results.songs.data;
+        // let albums = json.results.albums.data;
+        // let artists = json.results.artists.data;
+
+        // console.log(songs.length + " songs returned");
+        // console.log(albums.length + " albums returned");
+        // console.log(artists.length + " artists returned");
+
+        self.setState(definedData);
 
         albums.forEach((album) => {
           const img = new Image();
@@ -135,7 +151,7 @@ class Search extends Component {
 
   render() {
 
-    let askToSeach = !this.state.songs && !this.state.showLoading;
+    let askToSearch = !this.state.songs && !this.state.showLoading;
 
     return (
 
@@ -151,14 +167,14 @@ class Search extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} />
 
-        {askToSeach &&
-          <p style={{fontSize: 'calc(16px+0.5vw)'}}>search for a song, artist, or album</p>
+        {askToSearch &&
+          <p style={{ fontSize: 'calc(16px+0.5vw)' }}>search for a song, artist, or album</p>
         }
 
         {/* songs section */}
         {this.state.songs &&
           <Songs width="70vw" title="songs" songsData={this.state.songs} />}
-
+        
         {/* artists section */}
         {this.state.artists &&
           <Artists title="artists" handleClick={this.handleNewSelection} artistsData={this.state.artists} />}
@@ -166,7 +182,6 @@ class Search extends Component {
         {/* album section */}
         {this.state.albums &&
           <Albums title="albums" albumsData={this.state.albums} />}
-
       </div>
 
     );

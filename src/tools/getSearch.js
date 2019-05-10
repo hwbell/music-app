@@ -20,7 +20,7 @@ const headers = {
   Authorization: `Bearer ${jwtToken}`
 }
 
-const query = 'mickey avalon';
+const query = 'stop making sense';
 
 // for a search query
 const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists`;
@@ -36,33 +36,31 @@ fetch(searchUrl, {
   // for charts
   .then((json) => {
 
-    console.log(json)
+    // console.log(json)
 
-    let songs = json.results.songs.data;
-    let albums = json.results.albums.data;
-    let artists = json.results.artists.data;
+    // let songs = json.results.songs.data;
+    // let albums = json.results.albums.data;
+    // let artists = json.results.artists.data;
 
-    console.log(songs.length + " songs returned");
-    console.log(albums.length + " albums returned");
-    console.log(artists.length + " artists returned");
+    let { songs, albums, artists } = json.results;
+
+    let definedData = {};
 
     [songs, albums, artists].forEach((obj) => {
-      console.log(`*************************Top ${obj[0].type}***********************`);
+      // check if it is defined
+      if (obj) {
+        let { data } = obj;
+        let { type } = data[0];
 
-      console.log(obj[0])
+        console.log(`*************************Top ${type}***********************`);
+        console.log(`${data.length} ${type} returned`)
+        console.log(`**********************************************************`);
 
-      let songData = obj.map((item, i) => {
-        let { name, url, genreNames } = item.attributes;
-        let { id, type, href, attributes } = item;
-        return {
-          name,
-          url,
-          genreNames
-        }
-      })
+        // throw it in the object with its type as the property name
+        definedData[`${type}`] = data;
+      }
 
-      console.log(`**********************************************************`);
     });
-
+    // console.log(definedData.songs);
   })
   .catch((e) => console.log(e))

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 // components
-import TopCharts from './TopCharts';
+import TopCharts from './Charts/TopCharts';
 import Title from './Title';
 import Search from './Search/Search';
 

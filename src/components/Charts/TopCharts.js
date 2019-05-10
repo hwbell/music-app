@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
-import Title from '../components/Title';
+import Title from '../Title';
 
 // tools
-import { getWebToken } from '../tools/getWebToken';
+import { getWebToken } from '../../tools/getWebToken';
+import { getUsablePicUrl } from '../../tools/functions'; 
+import Featured from './Featured';
+
 const fetch = require("node-fetch");
 
+// TopCharts is the master component for everything derived from pure api data
+// without any input from the user, or anything outside of the search
 class TopCharts extends Component {
 
   constructor(props) {
@@ -17,7 +22,8 @@ class TopCharts extends Component {
     this.state = {
 
     }
-    this.renderCard = this.renderCard.bind(this);
+    
+    this.fetchTopCharts = this.fetchTopCharts.bind(this);
   }
 
   componentDidMount() {
@@ -91,33 +97,7 @@ class TopCharts extends Component {
 
   }
 
-  // for each of the two top cards, #1 album and #1 song
-  renderCard(props) {
-
-    console.log(props)
-    let artUrl = props.artwork.url;
-
-    // slice off the ending '{w}x{h}bb.jpeg' part of the url. we can replace it
-    // with '200x200bb.jpeg' for example. width + height can be assigned this way
-    let slicePoint = artUrl.indexOf('{w}');
-
-    let picUrl = artUrl.slice(0, slicePoint) + '1000x1000bb.jpeg';
-
-    return (
-      <div className="col-sm-6" style={styles.cardContainer}>
-        <Card className="featured-detail-card" style={styles.card}>
-          <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
-          <CardImgOverlay style={styles.imageOverlay}>
-
-            <CardTitle style={styles.cardTitle}>featured {props.type}</CardTitle>
-            <CardText style={styles.cardText}>{props.name.toLowerCase()}</CardText>
-            <CardText style={styles.cardTitle}>{props.artistName}</CardText>
-
-          </CardImgOverlay>
-        </Card>
-      </div>
-    )
-  }
+  
 
   // for the main Icon / Logo
   renderIcon() {
@@ -137,14 +117,9 @@ class TopCharts extends Component {
       <div className="" style={styles.container}>
 
         <Title className="title-charts" text="explore more music"/>
-
-        <div className="row" style={styles.cardsHolder}>
-
-          {this.state.topAlbumsData && this.renderCard(this.state.topAlbumsData[7])}
-
-          {this.state.topSongsData && this.renderCard(this.state.topSongsData[7])}
-
-        </div>
+        
+        <Featured topAlbumsData={this.state.topAlbumsData} topSongsData={this.state.topSongsData}/>
+        
 
 
         {/* {this.renderIcon()} */}
@@ -159,44 +134,7 @@ const styles = {
   container: {
     padding: '5px'
   },
-  cardsHolder: {
-    // maxWidth: '900px',
-    margin: 'auto auto'
-    // minWidth: '300px'
-  },
-  cardContainer: {
-    minWidth: '350px',
-    maxWidth: '600px',
-    margin: 'auto auto'
-    // height: '300px',
-  },
-  card: {
-    border: 'none'
-  },
-  cardImg: {
-    width: '100%',
-    // height: '260px',
-  },
-  imageOverlay: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  },
-  cardText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: '26px',
-    // margin: 'auto auto'
-  },
-  cardTitle: {
-    textAlign: 'center',
-    color: 'white',
-    // margin: 'auto auto',
-    // margin: 'auto auto'
-  },
+  
   logo: {
     width: '240px',
     height: '240px',

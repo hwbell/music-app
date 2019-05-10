@@ -64,7 +64,7 @@ class Artists extends Component {
             // if we got an imageSrc above, use it. otherwise use the itunes icon
             let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
             let { name, genreNames, id } = artist.attributes;
-            
+
             return (
               <ListGroupItem key={i}>
 
@@ -102,18 +102,20 @@ class Artists extends Component {
 
       <div style={styles.container}>
 
-        <p className="title" style={styles.titleText}>{this.props.title}</p>
+        <div style={styles.titleHolder}>
+          <p className="title" style={styles.titleText}>{this.props.title}</p>
+
+          {this.props.artistsData.length > 3 &&
+          <Button color="link" style={styles.button} onClick={this.toggleExpanded}>
+            {this.state.expanded ? 'show less' : 'all artists'}
+          </Button>}
+        </div>
 
         {this.renderArtists(this.props.artistsData, 3)}
 
         <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
           {this.renderArtists(this.props.artistsData.slice(3), this.props.artistsData.length)}
         </Collapse>
-
-        {this.props.artistsData.length > 3 &&
-          <Button className='button-purple' style={styles.button} onClick={this.toggleExpanded}>
-            {this.state.expanded ? 'show less' : 'all artists'}
-          </Button>}
 
         {/* {this.props.artistsData.length > 0 &&
           <Button className="button-purple"
@@ -143,8 +145,18 @@ const styles = {
     alignItems: 'center',
     marginBottom: '1rem'
   },
+  titleHolder: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   titleText: {
     fontSize: 'calc(28px + 0.5vw)',
+  },
+  button: {
+    fontSize: 'calc(12px + 1vw)',
   },
   listHolder: {
     width: '100%'
@@ -166,11 +178,7 @@ const styles = {
     width: '80px',
     height: '80px'
   },
-  button: {
-    alignSelf: 'flex-start',
-    marginTop: '2vw',
-    width: '180px'
-  },
+
   artistText: {
     padding: '0px',
     fontSize: 'calc(14px + 0.5vw)',

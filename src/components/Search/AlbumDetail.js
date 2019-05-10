@@ -33,7 +33,7 @@ class AlbumDetail extends Component {
 
   render() {
 
-    console.log(this.props.album.attributes)
+    // console.log(this.props.album.attributes)
 
     let { artistName, name, artwork, recordLabel, releaseDate, editorialNotes } = this.props.album.attributes;
 

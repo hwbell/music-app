@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import Media from "react-media";
 
 //  components
 import { Card, ListGroup, ListGroupItem, Collapse, Button, CardBody } from 'reactstrap';
@@ -18,8 +19,9 @@ class SongsList extends Component {
       expanded: false
     }
     this.toggle = this.toggle.bind(this);
-    this.renderSongs = this.renderSongs.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
+    this.renderSongs = this.renderSongs.bind(this);
+    this.renderText = this.renderText.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +40,24 @@ class SongsList extends Component {
     })
   }
 
+  // use this function to query the screen width and shorten the text if needed
+  renderText(text, style) {
+
+    let dots = text.length > 40 ? ` ...` : ``;
+
+    return (
+      <Media query="(max-width: 599px)">
+        {matches =>
+          matches ? (
+            <p style={style}>{`${text.slice(0, 40)}${dots}`}</p>
+          ) : (
+              <p style={style}>{text}</p>
+            )
+        }
+      </Media>
+    )
+  }
+
   renderSongs(songsData, length) {
     return (
       <ListGroup style={styles.listGroup}>
@@ -46,13 +66,6 @@ class SongsList extends Component {
           if (i < length) {
             let { trackNumber, artwork, name, artistName } = song.attributes;
 
-            if (name.length > 16) {
-              name = `${name.slice(0, 16)} ...`;
-            }
-            if (artistName.length > 16) {
-              artistName = `${artistName.slice(0, 16)} ...`;
-            }
-
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
             let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
 
@@ -60,14 +73,12 @@ class SongsList extends Component {
               <ListGroupItem key={i} style={styles.listGroupItem}>
                 <div className="row">
 
-                  <div className="col-6">
-                    <p className="" style={styles.songText}>{`${name}`}</p>
-                    <p className="" style={styles.listText}>{`${artistName}`}</p>
+                  <div className="col-9">
+                    {this.renderText(name, styles.songText)}
+                    {this.renderText(artistName, styles.listText)}
                   </div>
-
-
-                  <div className="col-6" style={styles.imageHolder}>
-                    <p className="" style={styles.listText}>{`${duration}`}</p>
+                  <div className="col-3" style={styles.imageHolder}>
+                    {/* <p className="" style={styles.listText}>{`${duration}`}</p> */}
                     <img style={styles.image} src={imageSrc}></img>
                   </div>
 
@@ -89,18 +100,26 @@ class SongsList extends Component {
 
       <div style={styles.container}>
 
-        <p className="title" style={styles.titleText}>{this.props.title}</p>
+        <div style={styles.titleHolder}>
+          <p className="title" style={styles.titleText}>{this.props.title}</p>
 
+          {/* this will open / close the remaining songs */}
+          {this.props.songsData.length > 3 &&
+            <Button color="link" style={styles.button} onClick={this.toggleExpanded}>
+              {this.state.expanded ? 'show less' : 'all songs'}
+            </Button>}
+
+        </div>
+
+        {/* show the first 3 songs initally */}
         {this.renderSongs(songsData, 3)}
 
+        {/* put the rest in a collapse */}
         <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
           {this.renderSongs(songsData.slice(3), songsData.length)}
         </Collapse>
 
-        {this.props.songsData.length > 3 &&
-          <Button className='button-purple' style={styles.button} onClick={this.toggleExpanded}>
-            {this.state.expanded ? 'show less' : 'show all songs'}
-          </Button>}
+        
 
       </div>
 
@@ -124,10 +143,21 @@ const styles = {
     width: '100%',
   },
   listGroupItem: {
-    maxHeight: 'calc(70px + 2vw)',
+    maxHeight: 'calc(75px + 2vw)',
+  },
+  titleHolder: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   titleText: {
+    // alignSelf: 'flex-start',
     fontSize: 'calc(28px + 0.5vw)',
+  },
+  button: {
+    fontSize: 'calc(12px + 1vw)',
   },
   listText: {
     margin: '0px',
@@ -137,7 +167,7 @@ const styles = {
   songText: {
     padding: '0px',
     margin: '0px',
-    fontSize: 'calc(12px + 0.5vw)',
+    fontSize: 'calc(8px + 1vw)',
     fontWeight: 'bold',
     // color: '#E91E63'
 
@@ -147,7 +177,7 @@ const styles = {
     height: '40px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     // paddingRight: '20px'
   },
@@ -155,11 +185,7 @@ const styles = {
     height: 'calc(45px + 1vw)',
     width: 'calc(45px + 1vw'
   },
-  button: {
-    alignSelf: 'flex-start',
-    marginTop: '2vw',
-    width: '180px'
-  },
+  
 }
 
 export default SongsList;
