@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
+import VideoPlayer from '../VideoPlayer';
 
 // tools
 import { getUsablePicUrl } from '../../tools/functions';
@@ -23,25 +24,24 @@ class Featured extends Component {
 
   }
 
-  // for each of the two top cards, #1 album and #1 song
+  // for each of the two top cards, #1 video and #1 song
   renderCard(props) {
 
-    // console.log(props)
-    
-    let picUrl = getUsablePicUrl(props.artwork.url, 1000)
+    // change the width depending on the media type
+    let containerClass = props.type === 'song' ? 'col-md-4' : 'col-md-8';
+
+    // picUrl is the link to the image, and previewUrl to the actual preview, for song or video
+    let picUrl = getUsablePicUrl(props.artwork.url, 1000);
+    let previewUrl = props.previews[0].url;
 
     return (
-      <div className="col-6" style={styles.cardContainer}>
-        <Card className="featured-detail-card" style={styles.card}>
-          <CardImg style={styles.cardImg} src={picUrl} alt="Card image cap" />
-          <CardImgOverlay style={styles.imageOverlay}>
+      <div style={{minWidth: '200px', marginTop: '20px'}} className={containerClass}>
+        <p style={styles.cardTitle}>featured {props.type}</p>
 
-            <CardTitle style={styles.cardTitle}>featured {props.type}</CardTitle>
-            <CardText style={styles.cardText}>{props.name.toLowerCase()}</CardText>
-            <CardText style={styles.cardTitle}>{props.artistName}</CardText>
+        <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} style={styles.videoPlayer} />
 
-          </CardImgOverlay>
-        </Card>
+        <p style={styles.songText}>{props.name.toLowerCase()}</p>
+        <p style={styles.artistText}>{props.artistName}</p>
       </div>
     )
   }
@@ -49,13 +49,15 @@ class Featured extends Component {
   render() {
 
     let randomInt = Math.floor(Math.random() * Math.floor(10));
-    
+
     return (
 
-        <div className="row" style={styles.container}>
-          {this.renderCard(this.props.topAlbumsData[randomInt])}
-          {this.renderCard(this.props.topSongsData[randomInt])}
-        </div>
+      <div className="row" style={styles.container}>
+
+        {this.renderCard(this.props.topVideosData[randomInt])}
+        {this.renderCard(this.props.topSongsData[randomInt])}
+
+      </div>
 
     );
   }
@@ -63,43 +65,31 @@ class Featured extends Component {
 
 const styles = {
   container: {
-    // maxWidth: '900px',
+    // minWidth: '400px',
+    // maxWidth: '800px',
     margin: '40px auto'
-    // minWidth: '300px'
   },
-  cardContainer: {
-    minWidth: '300px',
-    maxWidth: '450px',
-    margin: 'auto auto'
-    // height: '300px',
-  },
-  card: {
-    border: 'none'
-  },
-  cardImg: {
+
+  videoPlayer: {
     width: '100%',
-    // height: '260px',
-  },
-  
-  imageOverlay: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  },
-  cardText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: '26px',
     // margin: 'auto auto'
   },
   cardTitle: {
-    textAlign: 'center',
-    color: 'white',
-    // margin: 'auto auto',
-    // margin: 'auto auto'
+    textAlign: 'left',
+    padding: '0px',
+    margin: '0px',
+    color: 'rgb(160, 15, 87)',
+    fontSize: 'calc(25px + 1vw)',
+  },
+  songText: {
+    color: 'rgb(160, 15, 87)',
+    padding: '0px',
+    fontSize: 'calc(20px + 0.5vw)',
+  },
+  artistText: {
+    // marginLeft: '12px',
+    padding: '0px',
+    fontSize: 'calc(14px + 0.5vw)',
   },
 
 }

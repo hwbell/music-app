@@ -14,7 +14,7 @@ class SongsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: false,
     }
     this.renderSongs = this.renderSongs.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
@@ -32,6 +32,7 @@ class SongsList extends Component {
   }
 
   renderSongs(songsData, length) {
+    // console.log(songsData)
     return (
       <ListGroup style={styles.listGroup}>
         {songsData.map((song, i) => {
@@ -44,10 +45,13 @@ class SongsList extends Component {
             let imageSrc = getUsablePicUrl(song.attributes.artwork.url, 40);
 
             return (
-              <ListGroupItem key={i} style={styles.listGroupItem}>
-                <p style={styles.listText}>{`${trackNumber}`}</p>
-                <p style={styles.listText}>{`${name}`}</p>
-                <p style={styles.listText}>{`${duration}`}</p>
+              <ListGroupItem key={i}>
+                <div style={styles.listGroupItem}>
+                  <p style={styles.listText}>{`${trackNumber}`}</p>
+                  <p style={styles.listText}>{`${name}`}</p>
+                  <p style={styles.listText}>{`${duration}`}</p>
+                </div>
+
               </ListGroupItem>
             )
           }
@@ -61,6 +65,7 @@ class SongsList extends Component {
 
     let collapseStyle = { width: this.props.width || '100%' };
 
+
     return (
 
       <div style={styles.container}>
@@ -69,12 +74,6 @@ class SongsList extends Component {
           <div style={styles.card}>
             {this.renderSongs(this.props.songList, this.props.songList.length)}
           </div>
-
-          {/* <Button className='button-purple'
-            style={styles.button}
-            onClick={this.toggleExpanded}>
-            {this.state.expanded ? 'less' : 'more'}
-          </Button> */}
         </Collapse>
 
         {this.props.songList.length > 0 &&
@@ -82,7 +81,7 @@ class SongsList extends Component {
             style={collapseStyle}
             onClick={this.props.toggle}>
             {this.props.title}</Button>}
-            
+
       </div>
 
     );
@@ -106,7 +105,7 @@ const styles = {
   },
   listGroupItem: {
     width: '100%',
-    height: '40px',
+    height: '20px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -116,7 +115,7 @@ const styles = {
     padding: '0px',
     paddingTop: '5px',
     fontSize: 'calc(10px + 0.5vw)',
-  }
+  },
 
 }
 

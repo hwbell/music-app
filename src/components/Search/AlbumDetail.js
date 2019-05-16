@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 //  components
 import { Card, CardTitle, CardText, CardImg } from 'reactstrap';
 import SongList from '../Search/SongList';
+import ReactAudioPlayer from 'react-audio-player';
 
 // tools
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -15,7 +16,8 @@ class AlbumDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSongList: false
+      showSongList: false,
+      songPlaying: true
     }
     this.toggleSongList = this.toggleSongList.bind(this);
 
@@ -70,7 +72,6 @@ class AlbumDetail extends Component {
               title="show tracks" />}
         </div>
 
-
       </Card>
 
     );
@@ -81,10 +82,7 @@ const styles = {
   container: {
     border: 'none',
     width: '100%',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'space-evenly',
-    // alignItems: 'center'
+    marginBottom: '20px'
   },
   cardImg: {
     width: '100%',
@@ -118,6 +116,13 @@ const styles = {
     fontSize: 'calc(10px + 0.5vw)',
     marginBottom: '15px'
   },
+  audioPlayer: {
+    zIndex: 3,
+    position: 'fixed',
+    width: '90%',
+    margin: 'auto auto',
+    bottom: '0px'
+  }
 
 
 }

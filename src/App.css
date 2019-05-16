@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
-
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
 * {
   font-family: Quicksand;
 }
@@ -9,9 +9,42 @@ body {
   min-height: 100vh;
 }
 
-.title {
+.header {
+  background: linear-gradient(to right, rgb(255, 2, 255), rgb(128, 8, 241));
+}
+
+/* for the Navigator Component */
+.nav {
+  background: linear-gradient(to right, rgb(255, 2, 255), rgb(128, 8, 241));
+}
+
+.navlink:hover {
   color: rgb(84, 26, 219);
 }
+.navlink {
+  color: rgb(55, 30, 114);
+}
+.navlink:hover, .button-purple:active, .button-purple:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+/* for the Header Component */
+.button-signin {
+  border-radius: 3px;
+  border: none;
+  transition: all 0.3s ease;
+  color: white;
+  background-color: rgb(160, 15, 87);
+}
+.button-signin:hover {
+  background-color: rgb(128, 12, 70);
+}
+.button-signin:hover, .button-purple:active, .button-purple:focus, .button-pink:hover, .button-pink:active, .button-pink:focus {
+  outline: none;
+  text-decoration: none;
+}
+
 
 /* the Albums component */
 
@@ -36,7 +69,7 @@ body {
 
   /* AlbumDetail component */
 .album-detail-card {
-  height: 650px;
+  max-height: 780px;
   overflow: auto;
   transition:  all 0.3s ease;
   background: -webkit-gradient(linear, left top, right bottom, from(rgb(157, 102, 253)), to(rgb(0, 0, 0)));
@@ -60,21 +93,18 @@ body {
 .featured-detail-card {
   box-shadow: 1px 1px 5px 1px rgb(160, 15, 87);
 }
-.title-charts {
-  color: rgb(221, 21, 98);
-}
 
 .button-pink {
   border-radius: 3px;
   border: none;
   transition: all 0.3s ease;
-  background-color: rgb(221, 21, 98) !important;
-  color: white !important;
+  color: white;
+  background: none;
 }
-.button-purple:hover {
-  background-color: rgb(165, 20, 76) !important;
+.button-pink:hover {
+  color: rgb(31,31,31);
 }
-.button-purple:hover, .button-purple:active, .button-purple:focus {
+.button-pink:hover, .button-purple:active, .button-purple:focus, .button-pink:hover, .button-pink:active, .button-pink:focus {
   outline: none;
   text-decoration: none;
 }

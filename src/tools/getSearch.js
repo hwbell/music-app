@@ -54,9 +54,12 @@ fetch(searchUrl, {
 
         console.log(`*************************Top ${type}***********************`);
         console.log(`${data.length} ${type} returned`)
+
+        console.log('first album')
+        console.log(data[0])
         console.log(`**********************************************************`);
 
-        // throw it in the object with its type as the property name
+        // throw it in the object with its type as the key name
         definedData[`${type}`] = data;
       }
 

@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 //  components
-import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
+import { Card, CardBody, CardImg, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 
 // 
@@ -15,10 +15,8 @@ class MediaCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      overlay: false
+      // 
     }
-    this.onExit = this.onExit.bind(this);
-    this.onHover = this.onHover.bind(this);
 
   }
 
@@ -26,50 +24,54 @@ class MediaCard extends Component {
 
   }
 
-  onHover() {
-    this.setState({
-      overlay: true
-    })
-  }
-
-  onExit() {
-    this.setState({
-      overlay: false
-    })
-  }
-
   render() {
+    let fontSize = this.props.fontSize || '12px';
 
-    let cardTextStyle = {
+    let titleStyle = {
       textAlign: 'center',
-      color: 'white',
+      padding: 0,
+      margin: 0,
       fontWeight: 'bolder',
-      fontSize: this.props.fontSize || '12px',
+      fontSize
       // margin: 'auto auto'
+    };
+
+    let subtitleStyle = {
+      textAlign: 'center',
+      // color: 'black',
+      fontWeight: 'bolder',
+      fontSize: `calc(${fontSize} - 5px)`
     };
 
     return (
 
       <div className={this.props.className} style={styles.cardContainer}>
-        <Card style={{ border: 'none' }}
-          onClick={() => this.props.handleClick(this.props.index)}
-          onMouseOver={this.onHover}
-          onMouseLeave={this.onExit}>
+        {/* <Card style={{ border: 'none' }}>
+          <CardImg top width="100%" style={styles.cardImg} src={this.props.picUrl} alt="Card image cap" />
 
-          <CardImg style={styles.cardImg} src={this.props.picUrl} alt="Card image cap" />
+          <CardBody style={styles.imageOverlay}>
 
-          {/* use ReactCSSTransitionGroup for the fade in/out  */}
-          <ReactCSSTransitionGroup
-            transitionName="example"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}>
-            {this.state.overlay &&
-              <CardImgOverlay style={styles.imageOverlay}>
-                <CardText style={cardTextStyle}>{this.props.title}</CardText>
-              </CardImgOverlay>}
-          </ReactCSSTransitionGroup>
+            <CardText style={titleStyle}>{this.props.title}</CardText>
+            {this.props.subtitle &&
+
+              <CardText style={styles.subtitle}>{this.props.subtitle}</CardText>}
+
+          </CardBody>}
+
+        </Card> */}
+        <Card>
+          <CardImg src={this.props.picUrl} alt="Card image cap" />
+          <CardBody style={styles.cardBody}>
+
+            <CardText style={titleStyle}>{this.props.title}</CardText>
+
+            {this.props.subtitle &&
+              <CardText style={styles.subtitle}>{this.props.subtitle}</CardText>}
+
+          </CardBody>
 
         </Card>
+        
       </div>
 
     );
@@ -90,17 +92,17 @@ const styles = {
   cardImg: {
     // height: '100%',
   },
-  
-  imageOverlay: {
+  cardBody: {
+    position: 'absolute',
     width: '100%',
-    height: '100%',
+    height: '20%',
+    bottom: '0px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 10, 40, 0.65)'
+    backgroundColor: 'white'
   },
-
 
 }
 

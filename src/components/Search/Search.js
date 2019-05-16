@@ -3,6 +3,7 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 // components
+import Title from '../Title';
 import SearchInput from '../Search/SearchInput'
 import Albums from '../Search/Albums';
 import Songs from '../Search/Songs';
@@ -18,7 +19,8 @@ const initialState = {
   artists: null,
   albums: null,
   stations: null,
-  query: ''
+  showLoading: true,
+  query: 'rolling stones'
 }
 
 // while getting new results
@@ -46,7 +48,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    // this.fetchSearch();
+    this.fetchSearch(this.state.query);
   }
 
   // for searches
@@ -155,11 +157,14 @@ class Search extends Component {
 
     return (
 
-      <div className="col" style={styles.container}>
+      <div className="col" id="search" style={styles.container}>
 
         {this.state.showLoading &&
           <Spinner style={styles.spinner} color="primary" />
         }
+
+        {/* display the title */}
+        <Title color="rgb(84, 26, 219)" text="find your music"/>
 
         {/* search bar */}
         <SearchInput
@@ -173,7 +178,11 @@ class Search extends Component {
 
         {/* songs section */}
         {this.state.songs &&
-          <Songs width="70vw" title="songs" songsData={this.state.songs} />}
+          <Songs 
+            width="70vw" 
+            title="songs" 
+            handleClick={this.props.handleSongChange} 
+            songsData={this.state.songs} />}
         
         {/* artists section */}
         {this.state.artists &&
@@ -191,7 +200,8 @@ class Search extends Component {
 const styles = {
   container: {
     // border: '1px solid black',
-    minHeight: '500px',
+    minHeight: '100vh',
+    margin: '40px auto',
     padding: '5px',
     display: 'flex',
     flexDirection: 'column',
@@ -200,8 +210,8 @@ const styles = {
   },
   spinner: {
     position: 'absolute',
-    top: '35vh',
-    left: '45vw'
+    top: '40vh',
+    left: '48vw'
   }
 
 }

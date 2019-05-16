@@ -21,6 +21,10 @@ class Title extends Component {
 
   render() {
 
+    let titleStyle = {
+      fontSize: 'calc(25px + 1vw)',
+      color: this.props.color
+    }
 
     return (
 
@@ -28,10 +32,8 @@ class Title extends Component {
 
         {/* We'll do the top title if no text is provided */}
         {
-          this.props.text ?
-            <p className={this.props.className || "title"} style={styles.titleText}>{this.props.text}</p>
-            : <p className={this.props.className || "title"} style={styles.titleText}>find your music</p>
-
+          this.props.text &&
+            <p className={this.props.className || "title"} style={titleStyle}>{this.props.text}</p>
         }
 
       </div>
@@ -45,10 +47,6 @@ const styles = {
     width: '100%',
     margin: '40px auto'
   },
-  titleText: {
-    fontSize: 'calc(30px + 1vw)',
-  }
-
 
 }
 

@@ -68,13 +68,22 @@ class SongsList extends Component {
 
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
             let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
+            let previewUrl = song.attributes.previews[0].url;
 
             return (
               <ListGroupItem key={i} style={styles.listGroupItem}>
                 <div className="row">
 
                   <div className="col-9">
-                    {this.renderText(name, styles.songText)}
+                    <Button color="link"
+                      style={styles.artistText}
+                      
+                      // the click function will change the song playing on the main
+                      // page 
+                      onClick={() => this.props.handleClick(previewUrl)}>
+                      {this.renderText(name, styles.songText)}
+                    </Button>
+                    
                     {this.renderText(artistName, styles.listText)}
                   </div>
                   <div className="col-3" style={styles.imageHolder}>
@@ -130,11 +139,11 @@ class SongsList extends Component {
 const styles = {
   container: {
     width: '95%',
+    maxWidth: '800px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '1rem'
   },
   card: {
     width: '100%'
@@ -143,7 +152,8 @@ const styles = {
     width: '100%',
   },
   listGroupItem: {
-    maxHeight: 'calc(75px + 2vw)',
+    
+    // maxHeight: 'calc(75px + 2vw)',
   },
   titleHolder: {
     width: '100%',
@@ -153,37 +163,41 @@ const styles = {
     alignItems: 'center',
   },
   titleText: {
-    // alignSelf: 'flex-start',
+    color: 'rgb(84, 26, 219)',
+    margin: '20px',
     fontSize: 'calc(28px + 0.5vw)',
   },
   button: {
+    // margin: '10px',
+    marginRight: 'calc(20px + 1vw)',
     fontSize: 'calc(12px + 1vw)',
   },
   listText: {
-    margin: '0px',
+    marginLeft: '12px',
     padding: '0px',
     fontSize: 'calc(10px + 0.5vw)',
   },
   songText: {
+    textAlign: 'left',
     padding: '0px',
     margin: '0px',
-    fontSize: 'calc(8px + 1vw)',
-    fontWeight: 'bold',
+    fontSize: 'calc(14px + 0.5vw)',
+    // fontWeight: 'bold',
     // color: '#E91E63'
 
   },
   imageHolder: {
     // border: '1px solid',
-    height: '40px',
+    // height: '40px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     // paddingRight: '20px'
   },
   image: {
-    height: 'calc(45px + 1vw)',
-    width: 'calc(45px + 1vw'
+    height: 'calc(65px + 2vw)',
+    width: 'calc(65px + 2vw'
   },
   
 }

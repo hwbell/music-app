@@ -3,7 +3,7 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
-import { Button } from 'reactstrap';
+import MediaOverlayCard from '../MediaOverlayCard';
 import MediaCard from '../MediaCard';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
@@ -35,7 +35,7 @@ class CardCarousel extends Component {
     // lets shuffled the results for the carousel. This way we are less likely
     // to end up with the same artwork for song and album
     // console.log(data.sort(() => Math.random() - 0.5))
-    
+
     let shuffledData = data.sort(() => Math.random() - 0.5);
     return (
       <div>
@@ -46,20 +46,33 @@ class CardCarousel extends Component {
           let picUrl = getUsablePicUrl(artUrl, 500);
 
           let fullName = data.name;
+          let artistName = data.artistName;
           let tooLong = fullName.length > 40;
 
           let title = tooLong ? fullName.toLowerCase().slice(0, 30) + '...' : fullName.toLowerCase();
-
+          
           return (
             <Slide style={styles.slide} key={i} index={i}>
-              <MediaCard key={i}
-                fontSize="calc(20px+2vw)"
+              {/* <MediaOverlayCard key={i}
+                fontSize="calc(14px + 1vw)"
                 className="album-card"
                 handleClick={this.handleClick}
+                isOverlay={true}
                 index={startIndex + i}
                 id={id}
                 title={title}
+                subtitle={artistName}
+                picUrl={picUrl} /> */}
+
+              <MediaCard key={i}
+                fontSize="16px"
+                className="album-card"
+                index={startIndex + i}
+                id={id}
+                title={title}
+                subtitle={artistName}
                 picUrl={picUrl} />
+
             </Slide>
           )
         })}
@@ -74,7 +87,7 @@ class CardCarousel extends Component {
 
       <div style={styles.container}>
 
-        <Title className="title-charts" text={`Top ${this.props.type}`} />
+        <Title className="title-charts" color="rgb(221, 21, 98)" text={`Top 100 ${this.props.type}`} />
         <CarouselProvider
           className="album-card"
           naturalSlideWidth={100}
@@ -86,10 +99,14 @@ class CardCarousel extends Component {
             {this.renderCards(this.props.data, 0)}
           </Slider>
 
-          <div style={styles.buttonHolder}>
-            <ButtonBack className="button-pink">back</ButtonBack>
-            <ButtonNext className="button-pink">next</ButtonNext>
-          </div>
+          {/* <div style={styles.buttonHolder}> */}
+          <ButtonBack style={styles.backButton} className="button-pink">
+            <i className="fas fa-chevron-left"></i>
+          </ButtonBack>
+          <ButtonNext style={styles.nextButton} className="button-pink">
+          <i className="fas fa-chevron-right"></i>
+          </ButtonNext>
+          {/* </div> */}
 
         </CarouselProvider>
       </div>
@@ -110,11 +127,21 @@ const styles = {
   slide: {
     // border: '1px solid black',
   },
-  buttonHolder: {
+  backButton: {
     position: 'absolute',
-    bottom: '0px',
-    left: '40%'
+    left: '0px',
+    top: '48%'
+  },
+  nextButton: {
+    position: 'absolute',
+    right: '0px',
+    top: '48%'
   }
+  // buttonHolder: {
+  //   position: 'absolute',
+  //   bottom: '0px',
+  //   left: '40%'
+  // }
 }
 
 export default CardCarousel;

@@ -24,7 +24,7 @@ const headers = {
 }
 
 // for a charts query
-const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&genre=20&limit=10';
+const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&limit=100';
 
 
 fetch(chartsUrl, {
@@ -38,53 +38,9 @@ fetch(chartsUrl, {
   // for charts
   .then((json) => {
 
-    let albums = json.results.albums[0].data;
-    let songs = json.results.songs[0].data;
+    console.log(json.results.songs[0].data[0].attributes.previews)
 
-    console.log(albums.length + " albums returned");
-    console.log(songs.length + " songs returned")
-
-    console.log(`*************************Top Albums***********************`);
     
-    let albumData = albums.map( (album, i) => {
-        let { id } = album;
-      let { name, url, artwork, artistName, releaseDate, editorialNotes } = album.attributes;
-      return {
-        id,
-        url,
-        name,
-        artwork,
-        artistName,
-        releaseDate,
-        editorialNotes
-      }
-    })
-
-    // let artUrl = albumData[0].artwork.url;
-    // let slicePoint = artUrl.indexOf("{w}");
-
-    // console.log(albumData[0].artwork.url.slice(0, slicePoint))
-
-    console.log(`**********************************************************`);
-
-    console.log(`*************************Top Songs***********************`);
-    
-    let songData = songs.map( (song, i) => {
-      let { id } = song;
-      let { url, name, artwork, artistName, durationInMillis } = song.attributes;
-      return {
-        id,
-        url, 
-        name,
-        artwork,
-        artistName,
-        durationInMillis,
-      }
-    })
-    // console.log(json.results.songs[0].data[0].attributes.artwork)
-    // console.log(songData)
-
-    console.log(`**********************************************************`);
 
   })
   .catch((e) => console.log(e))

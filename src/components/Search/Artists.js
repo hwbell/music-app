@@ -69,10 +69,10 @@ class Artists extends Component {
               <ListGroupItem key={i}>
 
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-3">
                     <img style={styles.image} src={imageSrc}></img>
                   </div>
-                  <div className="col-6" style={styles.nameHolder}>
+                  <div className="col-9" style={styles.nameHolder}>
 
                     <Button color="link"
                       style={styles.artistText}
@@ -139,11 +139,11 @@ const styles = {
   container: {
     marginTop: '40px',
     width: '95%',
+    maxWidth: '800px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '1rem'
   },
   titleHolder: {
     width: '100%',
@@ -153,9 +153,13 @@ const styles = {
     alignItems: 'center',
   },
   titleText: {
+    color: 'rgb(84, 26, 219)',
+    margin: '20px',
     fontSize: 'calc(28px + 0.5vw)',
   },
   button: {
+    // margin: '10px',
+    marginRight: 'calc(20px + 1vw)',
     fontSize: 'calc(12px + 1vw)',
   },
   listHolder: {
@@ -172,7 +176,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
   },
   image: {
     width: '80px',

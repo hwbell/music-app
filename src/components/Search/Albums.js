@@ -3,7 +3,7 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
-import MediaCard from '../../components/MediaCard';
+import MediaOverlayCard from '../MediaOverlayCard';
 import AlbumDetail from './AlbumDetail';
 import { Button, Collapse } from 'reactstrap';
 
@@ -71,7 +71,7 @@ class Albums extends Component {
       .then(res => res.json())
       .then((json) => {
 
-        console.log(json.data[0].relationships.tracks.data)
+        // console.log(json.data[0].relationships.tracks.data)
         self.setState({
           songList: json.data[0].relationships.tracks.data
         })
@@ -120,7 +120,7 @@ class Albums extends Component {
 
           return (
 
-            <MediaCard key={i}
+            <MediaOverlayCard key={i}
               className="album-card col-6 col-md-4"
               handleClick={this.handleClick}
               index={startIndex+i}
@@ -188,16 +188,18 @@ class Albums extends Component {
 
 const styles = {
   container: {
-    // margin: '4vw'
+    marginTop: '40px',
     width: '95%',
+    maxWidth: '800px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '1rem'
   },
   titleText: {
     alignSelf: 'flex-start',
+    color: 'rgb(84, 26, 219)',
+    margin: '20px',
     fontSize: 'calc(28px + 0.5vw)',
   },
   cardsHolder: {
