@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 //  components
 import { Card, CardTitle, CardText, CardImg } from 'reactstrap';
 import SongList from '../Search/SongList';
-import ReactAudioPlayer from 'react-audio-player';
 
 // tools
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -66,6 +65,7 @@ class AlbumDetail extends Component {
           {/* the song list with toggler. just pass it the songList when its ready */}
           {this.props.songList &&
             <SongList isSmall={true}
+              handleClick={this.props.handleClick}
               collapse={this.state.showSongList}
               toggle={this.toggleSongList}
               songList={this.props.songList}

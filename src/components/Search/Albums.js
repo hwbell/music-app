@@ -151,6 +151,7 @@ class Albums extends Component {
           {/* the featured album - whichever is currently selected. defaults to first in list */}
           <div className="col-sm-8 col-md-6">
             <AlbumDetail
+              handleClick={this.props.handleClick}
               album={this.props.albumsData[activeIndex]}
               songList={this.state.songList}
               collapse={true}

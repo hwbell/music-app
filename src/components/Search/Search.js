@@ -99,13 +99,6 @@ class Search extends Component {
           }
 
         });
-        // let songs = json.results.songs.data;
-        // let albums = json.results.albums.data;
-        // let artists = json.results.artists.data;
-
-        // console.log(songs.length + " songs returned");
-        // console.log(albums.length + " albums returned");
-        // console.log(artists.length + " artists returned");
 
         self.setState(definedData);
 
@@ -190,7 +183,10 @@ class Search extends Component {
 
         {/* album section */}
         {this.state.albums &&
-          <Albums title="albums" albumsData={this.state.albums} />}
+          <Albums title="albums" 
+            albumsData={this.state.albums} 
+            handleClick={this.props.handleSongChange}   
+            />}
       </div>
 
     );

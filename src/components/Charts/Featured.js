@@ -8,6 +8,7 @@ import VideoPlayer from '../VideoPlayer';
 
 // tools
 import { getUsablePicUrl } from '../../tools/functions';
+import { shortenStr } from '../../tools/functions';
 
 // 
 class Featured extends Component {
@@ -27,21 +28,21 @@ class Featured extends Component {
   // for each of the two top cards, #1 video and #1 song
   renderCard(props) {
 
-    // change the width depending on the media type
-    let containerClass = props.type === 'song' ? 'col-md-4' : 'col-md-8';
 
     // picUrl is the link to the image, and previewUrl to the actual preview, for song or video
     let picUrl = getUsablePicUrl(props.artwork.url, 1000);
     let previewUrl = props.previews[0].url;
 
     return (
-      <div style={{minWidth: '200px', marginTop: '20px'}} className={containerClass}>
+      <div style={styles.cardHolder} className="col-md-6">
         <p style={styles.cardTitle}>featured {props.type}</p>
 
         <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} style={styles.videoPlayer} />
 
-        <p style={styles.songText}>{props.name.toLowerCase()}</p>
-        <p style={styles.artistText}>{props.artistName}</p>
+        <div>
+          <p style={styles.songText}>{shortenStr(props.name.toLowerCase(), 30)}</p>
+          <p style={styles.artistText}>{shortenStr(props.artistName.toLowerCase(), 30)}</p>
+        </div>
       </div>
     )
   }
@@ -70,10 +71,19 @@ const styles = {
     margin: '40px auto'
   },
 
+  cardHolder: {
+    minWidth: '200px',
+    marginTop: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start'
+  },
   videoPlayer: {
     width: '100%',
     // margin: 'auto auto'
   },
+
   cardTitle: {
     textAlign: 'left',
     padding: '0px',

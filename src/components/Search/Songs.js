@@ -182,18 +182,13 @@ const styles = {
     padding: '0px',
     margin: '0px',
     fontSize: 'calc(14px + 0.5vw)',
-    // fontWeight: 'bold',
-    // color: '#E91E63'
 
   },
   imageHolder: {
-    // border: '1px solid',
-    // height: '40px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    // paddingRight: '20px'
   },
   image: {
     height: 'calc(65px + 2vw)',

@@ -61,5 +61,6 @@ console.log(shortenStr('hello, how are you? are you here? who am i talking toooo
 
 module.exports = {
   getUsablePicUrl,
-  convertMillisToStandard
+  convertMillisToStandard,
+  shortenStr
 }

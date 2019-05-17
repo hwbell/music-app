@@ -42,10 +42,10 @@ class SongsList extends Component {
             let tooLong = song.attributes.name.length > 14;
             let name = tooLong ? `${song.attributes.name.toString().slice(0, 14)} ...` : song.attributes.name;
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
-            let imageSrc = getUsablePicUrl(song.attributes.artwork.url, 40);
-
+            let previewUrl = song.attributes.previews[0].url;
             return (
-              <ListGroupItem key={i}>
+              <ListGroupItem className="song-list-item" key={i}
+                onClick={() => this.props.handleClick(previewUrl)}>
                 <div style={styles.listGroupItem}>
                   <p style={styles.listText}>{`${trackNumber}`}</p>
                   <p style={styles.listText}>{`${name}`}</p>
@@ -104,6 +104,7 @@ const styles = {
     width: '100%',
   },
   listGroupItem: {
+    
     width: '100%',
     height: '20px',
     display: 'flex',

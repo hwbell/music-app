@@ -85,7 +85,7 @@ class CardCarousel extends Component {
     // console.log(this.props.data)
     return (
 
-      <div style={styles.container}>
+      <div className="col" style={styles.container}>
 
         <Title className="title-charts" color="rgb(221, 21, 98)" text={`Top 100 ${this.props.type}`} />
         <CarouselProvider
@@ -116,7 +116,7 @@ class CardCarousel extends Component {
 
 const styles = {
   container: {
-    width: '80%',
+    width: '100%',
     minWidth: '300px',
     maxWidth: '450px',
     margin: 'auto auto'

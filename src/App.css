@@ -10,12 +10,12 @@ body {
 }
 
 .header {
-  background: linear-gradient(to right, rgb(255, 2, 255), rgb(128, 8, 241));
+  background: linear-gradient(to right, rgb(221, 21, 98), rgb(128, 8, 241));
 }
 
 /* for the Navigator Component */
 .nav {
-  background: linear-gradient(to right, rgb(255, 2, 255), rgb(128, 8, 241));
+  background: linear-gradient(to right,rgb(221, 21, 98), rgb(128, 8, 241));
 }
 
 .navlink:hover {
@@ -87,6 +87,14 @@ body {
   background-color: whitesmoke;
   border-radius: 5px;
   background-color: rgb(156, 154, 160);
+}
+
+.song-list-item {
+  background-color: rgb(233, 231, 231);
+}
+.song-list-item:hover {
+  background-color: rgb(221, 217, 217);
+  cursor: pointer;
 }
 
 /* the TopCharts component */

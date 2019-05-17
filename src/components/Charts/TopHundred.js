@@ -23,7 +23,7 @@ class Genres extends Component {
 
   render() {
     return (
-      <div style={styles.container} className="row">
+      <div style={styles.container} className="text-center row">
         {/* carousel of mixed albums */}
         {this.props.topAlbumsData &&
           <CardCarousel type="Albums" data={this.props.topAlbumsData} />}
