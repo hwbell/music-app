@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 // components
 import Navigator from './Navigator';
 import Header from './Header';
+import Footer from './Footer';
 import TopCharts from './Charts/TopCharts';
 import Search from './Search/Search';
 import ReactAudioPlayer from 'react-audio-player';
-
+import VideoPlayer from './VideoPlayer';
+import {Button} from 'reactstrap';
 
 // initial state for the component
 
@@ -18,21 +20,33 @@ class MainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      musicPlaying: false
+      songPlaying: false,
+      videoPlaying: false
     };
     this.handleSongChange = this.handleSongChange.bind(this);
+    // this.handleVideoChange = this.handleVideoChange.bind(this);
   }
 
   componentDidMount() {
     // fetch the chart data and search data to start
   }
 
-  handleSongChange (songUrl) {
+  handleSongChange(songUrl, info) {
     this.setState({
-      musicPlaying: true,
-      songToPlay: songUrl
-    })
+      songPlaying: true,
+      songPlayingUrl: songUrl,
+      songPlayingInfo: info
+    });
   }
+
+  // handleVideoChange(picUrl, videoUrl, info) {
+  //   this.setState({
+  //     videoPlaying: true,
+  //     videoPlayingPicUrl: picUrl,
+  //     videoPlayingPreviewUrl: videoUrl,
+  //     videoPlayingInfo: info
+  //   });
+  // }
 
   render() {
     return (
@@ -44,23 +58,42 @@ class MainPage extends Component {
 
         <Navigator />
 
-        <TopCharts handleSongChange={this.handleSongChange}/>
+        {/* display the search bar / results */}
+        <Search handleSongChange={this.handleSongChange} />
 
         <hr></hr>
 
         {/* display the search bar / results */}
-        <Search handleSongChange={this.handleSongChange}/>
+        <TopCharts handleSongChange={this.handleSongChange} />
 
         {/* display the audio player at the bottom */}
-        {this.state.musicPlaying &&
-          <ReactAudioPlayer
-            className="text-center"
-            style={styles.audioPlayer}
-            // src={'https://video-ssl.itunes.apple.com/itunes-assets/Video123/v4/60/16/4b/60164bd6-e1d6-0ba4-8855-734c0e68fb50/mzvf_192431168270380080.720w.h264lc.U.p.m4v'}
-            src={this.state.songToPlay}
-            autoPlay
-            controls
-          />}
+        {this.state.songPlaying &&
+          <div style={styles.audioHolder}>
+            <Button className="float-right" 
+              color="link" 
+              onClick={() => this.setState({songPlaying: false})}>
+              
+              <i className="fas fa-times-circle"></i>
+            </Button>
+
+            <p style={styles.audioText}>{this.state.songPlayingInfo}</p>
+            <ReactAudioPlayer
+              style={styles.audioPlayer}
+              src={this.state.songPlayingUrl}
+              autoPlay
+              controls
+            />
+          </div>}
+
+        {/* display the video player at the bottom */}
+        {/* {this.state.videoPlaying &&
+          <div style={styles.videoHolder}>
+            <p>{this.state.videoPlayingInfo}</p>
+            <VideoPlayer picUrl={this.state.videoPlayingPicUrl} 
+              previewUrl={this.state.videoPlayingPreviewUrl} style={{ width: '100%' }} />
+          </div>} */}
+
+        <Footer />
 
       </div>
     );
@@ -68,12 +101,33 @@ class MainPage extends Component {
 }
 
 const styles = {
-  audioPlayer: {
+  audioHolder: {
+    // zIndex: 3,
     position: 'fixed',
-    bottom: '0px',
-    width: '100%',
-    height: '35px'
-  }
+    bottom: '5px',
+    left: '10px',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    borderRadius: '25px',
+    minWidth: '250px'
+  },
+  audioPlayer: {
+    margin: '10px',
+    // width: '90%'
+  },
+  audioText: {
+    margin: '10px',
+    color: 'white'
+  },
+
+  videoHolder: {
+    zIndex: 3,
+    position: 'fixed',
+    bottom: '5px',
+    right: '10px',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    borderRadius: '25px',
+    minWidth: '300px'
+  },
 }
 
 export default MainPage;

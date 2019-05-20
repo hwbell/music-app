@@ -43,13 +43,11 @@ class SongsList extends Component {
   // use this function to query the screen width and shorten the text if needed
   renderText(text, style) {
 
-    let dots = text.length > 40 ? ` ...` : ``;
-
     return (
       <Media query="(max-width: 599px)">
         {matches =>
           matches ? (
-            <p style={style}>{`${text.slice(0, 40)}${dots}`}</p>
+            <p style={style}>{shortenStr(text, 40)}</p>
           ) : (
               <p style={style}>{text}</p>
             )
@@ -70,6 +68,9 @@ class SongsList extends Component {
             let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
             let previewUrl = song.attributes.previews[0].url;
 
+            // this is to pass back to the main page for the audio player 
+            let songInfo = `${shortenStr(name, 20)} by ${artistName}`;
+
             return (
               <ListGroupItem key={i} style={styles.listGroupItem}>
                 <div className="row">
@@ -80,7 +81,7 @@ class SongsList extends Component {
                       
                       // the click function will change the song playing on the main
                       // page 
-                      onClick={() => this.props.handleClick(previewUrl)}>
+                      onClick={() => this.props.handleClick(previewUrl, songInfo)}>
                       {this.renderText(name, styles.songText)}
                     </Button>
                     
@@ -173,7 +174,7 @@ const styles = {
     fontSize: 'calc(12px + 1vw)',
   },
   listText: {
-    marginLeft: '12px',
+    marginLeft: '10px',
     padding: '0px',
     fontSize: 'calc(10px + 0.5vw)',
   },
@@ -181,7 +182,7 @@ const styles = {
     textAlign: 'left',
     padding: '0px',
     margin: '0px',
-    fontSize: 'calc(14px + 0.5vw)',
+    fontSize: 'calc(12px + 0.5vw)',
 
   },
   imageHolder: {
@@ -191,8 +192,8 @@ const styles = {
     alignItems: 'center',
   },
   image: {
-    height: 'calc(65px + 2vw)',
-    width: 'calc(65px + 2vw'
+    height: 'calc(50px + 2vw)',
+    width: 'calc(50px + 2vw'
   },
   
 }

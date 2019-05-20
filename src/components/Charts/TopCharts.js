@@ -56,11 +56,11 @@ class TopCharts extends Component {
         let songs = json.results.songs[0].data;
         let videos = json.results['music-videos'][0].data;
 
-        console.log(albums.length + " albums returned");
-        console.log(songs.length + " songs returned");
-        console.log(videos.length + " videos returned");
+        // console.log(albums.length + " albums returned");
+        // console.log(songs.length + " songs returned");
+        // console.log(videos.length + " videos returned");
 
-        console.log(`*************************Top Albums***********************`);
+        // console.log(`*************************Top Albums***********************`);
 
         let topAlbumsData = albums.map((album, i) => {
           let { id } = album;
@@ -72,9 +72,9 @@ class TopCharts extends Component {
         });
         // console.log(albumData[0])
 
-        console.log(`**********************************************************`);
+        // console.log(`**********************************************************`);
 
-        console.log(`*************************Top Songs***********************`);
+        // console.log(`*************************Top Songs***********************`);
 
         let topSongsData = songs.map((song, i) => {
           let { id } = song;
@@ -86,9 +86,9 @@ class TopCharts extends Component {
         });
         // console.log(songData[0])
 
-        console.log(`**********************************************************`);
+        // console.log(`**********************************************************`);
 
-        console.log(`*************************Top Videos***********************`);
+        // console.log(`*************************Top Videos***********************`);
 
         let topVideosData = videos.map((video, i) => {
           let { id } = video;
@@ -101,7 +101,7 @@ class TopCharts extends Component {
         });
         // console.log(songData[0])
 
-        console.log(`**********************************************************`);
+        // console.log(`**********************************************************`);
 
         // save the fetch results to state. shouldn't have to change these once we fetch
         this.setState({
@@ -136,13 +136,17 @@ class TopCharts extends Component {
       <div className="" id="browse" style={styles.container}>
 
         {/* the top 100 list for songs / ablums */}
-        <TopHundred 
-          topAlbumsData={this.state.topAlbumsData} 
-          topSongsData={this.state.topSongsData}/>
+        {this.state.topAlbumsData && this.state.topSongsData &&
+          <TopHundred
+            topAlbumsData={this.state.topAlbumsData}
+            topSongsData={this.state.topSongsData} 
+            handleSongChange={this.props.handleSongChange}
+            />}
 
         {/* the two top feature cards - music video / song */}
-        { this.state.topVideosData && this.state.topSongsData &&
-          <Featured topVideosData={this.state.topVideosData} topSongsData={this.state.topSongsData}/>}
+        {this.state.topVideosData && this.state.topSongsData &&
+          <Featured topVideosData={this.state.topVideosData}
+            topSongsData={this.state.topSongsData} />}
 
         {/* {this.renderIcon()} */}
 
@@ -156,6 +160,10 @@ const styles = {
   container: {
     margin: '40px auto',
     padding: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   logo: {

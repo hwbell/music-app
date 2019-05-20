@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Card, ListGroup, ListGroupItem, Collapse, Button, CardBody } from 'reactstrap';
 
 // tools
-import { getUsablePicUrl, convertMillisToStandard } from '../../tools/functions';
+import { getUsablePicUrl, convertMillisToStandard, shortenStr } from '../../tools/functions';
 
 // 
 class SongsList extends Component {
@@ -33,22 +33,26 @@ class SongsList extends Component {
 
   renderSongs(songsData, length) {
     // console.log(songsData)
+
     return (
       <ListGroup style={styles.listGroup}>
         {songsData.map((song, i) => {
 
           if (i < length) {
-            let { trackNumber } = song.attributes;
-            let tooLong = song.attributes.name.length > 14;
-            let name = tooLong ? `${song.attributes.name.toString().slice(0, 14)} ...` : song.attributes.name;
+            let { trackNumber, name, artistName } = song.attributes;
+            let displayName = shortenStr(name, 20)
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
             let previewUrl = song.attributes.previews[0].url;
+            
+            // this is to pass back to the main page for the audio player 
+            let songInfo = `${displayName} by ${artistName}`;
+
             return (
               <ListGroupItem className="song-list-item" key={i}
-                onClick={() => this.props.handleClick(previewUrl)}>
+                onClick={() => this.props.handleClick(previewUrl, songInfo)}>
                 <div style={styles.listGroupItem}>
                   <p style={styles.listText}>{`${trackNumber}`}</p>
-                  <p style={styles.listText}>{`${name}`}</p>
+                  <p style={styles.listText}>{`${displayName}`}</p>
                   <p style={styles.listText}>{`${duration}`}</p>
                 </div>
 
@@ -115,7 +119,7 @@ const styles = {
   listText: {
     padding: '0px',
     paddingTop: '5px',
-    fontSize: 'calc(10px + 0.5vw)',
+    fontSize: 'calc(8px + 0.5vw)',
   },
 
 }

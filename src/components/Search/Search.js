@@ -7,8 +7,10 @@ import Title from '../Title';
 import SearchInput from '../Search/SearchInput'
 import Albums from '../Search/Albums';
 import Songs from '../Search/Songs';
+import MusicVideos from '../Search/MusicVideos';
 import Artists from '../Search/Artists';
 import { Spinner } from 'reactstrap';
+
 // tools
 import { getWebToken } from '../../tools/getWebToken';
 import { getUsablePicUrl } from '../../tools/functions';
@@ -63,7 +65,7 @@ class Search extends Component {
     }
 
     // for a search query
-    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists`;
+    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,music-videos`;
 
     fetch(searchUrl, {
       method: 'GET',
@@ -78,13 +80,14 @@ class Search extends Component {
 
         // get these object via destructuring, then get rid of the ones that don't exist
         let { songs, albums, artists } = json.results;
+        let videos = json.results['music-videos'];
 
         // initialize an object to store the results that exist
         // initialize with showLoading: false so the loader can be eliminated when we get the data
         // this way we only call this.setState({}) once below
         let definedData = { showLoading: false };
         
-        [songs, albums, artists].forEach((obj) => {
+        [songs, albums, artists, videos].forEach((obj) => {
           // check if it is defined
           if (obj) {
             let { data } = obj;
@@ -102,11 +105,11 @@ class Search extends Component {
 
         self.setState(definedData);
 
-        albums.forEach((album) => {
-          const img = new Image();
-          img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
-          // console.log(img.src)
-        });
+        // albums.forEach((album) => {
+        //   const img = new Image();
+        //   img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
+        //   // console.log(img.src)
+        // });
 
       })
       .catch((e) => console.log(e))
@@ -172,16 +175,22 @@ class Search extends Component {
         {/* songs section */}
         {this.state.songs &&
           <Songs 
-            width="70vw" 
             title="songs" 
             handleClick={this.props.handleSongChange} 
             songsData={this.state.songs} />}
+
+        {/* videos section */}
+        {this.state['music-videos'] && 
+          <MusicVideos title="music videos" 
+            videosData={this.state['music-videos']}/>}
         
         {/* artists section */}
         {this.state.artists &&
-          <Artists title="artists" handleClick={this.handleNewSelection} artistsData={this.state.artists} />}
+          <Artists title="artists" 
+            handleClick={this.handleNewSelection} 
+            artistsData={this.state.artists} />}
 
-        {/* album section */}
+        {/* albums section */}
         {this.state.albums &&
           <Albums title="albums" 
             albumsData={this.state.albums} 
@@ -197,7 +206,7 @@ const styles = {
   container: {
     // border: '1px solid black',
     minHeight: '100vh',
-    margin: '40px auto',
+    margin: '20px auto',
     padding: '5px',
     display: 'flex',
     flexDirection: 'column',

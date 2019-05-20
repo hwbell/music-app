@@ -44,6 +44,7 @@ class CardCarousel extends Component {
           let id = data.id;
           // get a usable url with real size
           let picUrl = getUsablePicUrl(artUrl, 500);
+          let previewUrl = data.previews ? data.previews[0].url : null;
 
           let fullName = data.name;
           let artistName = data.artistName;
@@ -53,25 +54,18 @@ class CardCarousel extends Component {
           
           return (
             <Slide style={styles.slide} key={i} index={i}>
-              {/* <MediaOverlayCard key={i}
-                fontSize="calc(14px + 1vw)"
-                className="album-card"
-                handleClick={this.handleClick}
-                isOverlay={true}
-                index={startIndex + i}
-                id={id}
-                title={title}
-                subtitle={artistName}
-                picUrl={picUrl} /> */}
 
               <MediaCard key={i}
+                type={this.props.type}
+                handleClick={this.props.handleClick}
                 fontSize="16px"
                 className="album-card"
                 index={startIndex + i}
                 id={id}
                 title={title}
                 subtitle={artistName}
-                picUrl={picUrl} />
+                picUrl={picUrl}
+                previewUrl={previewUrl} />
 
             </Slide>
           )
@@ -88,6 +82,7 @@ class CardCarousel extends Component {
       <div className="col" style={styles.container}>
 
         <Title className="title-charts" color="rgb(221, 21, 98)" text={`Top 100 ${this.props.type}`} />
+
         <CarouselProvider
           className="album-card"
           naturalSlideWidth={100}

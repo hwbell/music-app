@@ -52,8 +52,8 @@ class Albums extends Component {
 
     const self = this;
 
-    console.log(`getting songs for the album: `);
-    console.log(query)
+    // console.log(`getting songs for the album: `);
+    // console.log(query)
 
     // this is the form specified by apple
     let jwtToken = getWebToken();
@@ -88,7 +88,7 @@ class Albums extends Component {
   }
 
   handleClick(index) {
-    console.log(this.props.albumsData)
+    // console.log(this.props.albumsData)
     this.setState({
       activeIndex: index
     }, () => {

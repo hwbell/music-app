@@ -37,11 +37,11 @@ class Featured extends Component {
       <div style={styles.cardHolder} className="col-md-6">
         <p style={styles.cardTitle}>featured {props.type}</p>
 
-        <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} style={styles.videoPlayer} />
+        <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} style={{width: '100%'}} />
 
         <div>
-          <p style={styles.songText}>{shortenStr(props.name.toLowerCase(), 30)}</p>
-          <p style={styles.artistText}>{shortenStr(props.artistName.toLowerCase(), 30)}</p>
+          <p style={styles.songText}>{shortenStr(props.name.toLowerCase(), 60)}</p>
+          <p style={styles.artistText}>{shortenStr(props.artistName.toLowerCase(), 60)}</p>
         </div>
       </div>
     )
@@ -66,35 +66,29 @@ class Featured extends Component {
 
 const styles = {
   container: {
-    // minWidth: '400px',
-    // maxWidth: '800px',
-    margin: '40px auto'
+    width: '100%',
+    maxWidth: '800px',
+    margin: '40px auto',
   },
 
   cardHolder: {
     minWidth: '200px',
-    marginTop: '20px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start'
   },
-  videoPlayer: {
-    width: '100%',
-    // margin: 'auto auto'
-  },
-
   cardTitle: {
     textAlign: 'left',
     padding: '0px',
     margin: '0px',
-    color: 'rgb(160, 15, 87)',
-    fontSize: 'calc(25px + 1vw)',
+    color: 'rgb(221, 21, 98)',
+    fontSize: 'calc(18px + 0.5vw)',
   },
   songText: {
-    color: 'rgb(160, 15, 87)',
+    color: 'rgb(221, 21, 98)',
     padding: '0px',
-    fontSize: 'calc(20px + 0.5vw)',
+    fontSize: 'calc(12px + 0.5vw)',
   },
   artistText: {
     // marginLeft: '12px',

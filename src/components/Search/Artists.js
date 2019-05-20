@@ -44,9 +44,6 @@ class Artists extends Component {
       <ListGroup style={styles.listGroup}>
         {artistsData.map((artist, i) => {
 
-          {/* console.log(`i: ${i}`)
-          console.log(artist) */}
-
           // get the first artwork available in the artists list of albums
           // if there isnt one at all, use the itunes icon
           let albumList = artist.relationships.albums.data;
@@ -117,18 +114,6 @@ class Artists extends Component {
           {this.renderArtists(this.props.artistsData.slice(3), this.props.artistsData.length)}
         </Collapse>
 
-        {/* {this.props.artistsData.length > 0 &&
-          <Button className="button-purple"
-            style={{ width: '100%' }}
-            onClick={this.toggle}>
-            {this.props.title}</Button>}
-
-        <Collapse style={{ width: '100%' }} isOpen={!this.state.collapse}>
-          <div style={styles.card}>
-            {this.renderArtists(this.props.artistsData, this.props.artistsData.length)}
-          </div>
-
-        </Collapse> */}
       </div>
 
     );

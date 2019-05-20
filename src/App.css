@@ -9,8 +9,33 @@ body {
   min-height: 100vh;
 }
 
+/* the header and footer style */
 .header {
   background: linear-gradient(to right, rgb(221, 21, 98), rgb(128, 8, 241));
+}
+.footer {
+  background: linear-gradient(to right, rgb(221, 21, 98), rgb(128, 8, 241));
+}
+.footer-apple {
+  background: -webkit-gradient(linear, left top, right bottom, from(rgb(221, 21, 98)), to(rgb(190, 15, 221)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 80px;
+  margin: 20px;
+}
+.footer-code {
+  color: rgb(190, 15, 221);
+  font-size: 50px;
+  margin: 20px;
+}
+.footer-note {
+  background: -webkit-gradient(linear, left top, right bottom, from(rgb(190, 15, 221)), to(rgb(128, 8, 241)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 80px;
+  margin: 20px;
 }
 
 /* for the Navigator Component */
@@ -18,12 +43,14 @@ body {
   background: linear-gradient(to right,rgb(221, 21, 98), rgb(128, 8, 241));
 }
 
+.navlink {
+  font-weight: 600;
+  color: rgb(55, 30, 114);
+}
 .navlink:hover {
   color: rgb(84, 26, 219);
 }
-.navlink {
-  color: rgb(55, 30, 114);
-}
+
 .navlink:hover, .button-purple:active, .button-purple:focus {
   outline: none;
   text-decoration: none;

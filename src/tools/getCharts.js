@@ -24,7 +24,7 @@ const headers = {
 }
 
 // for a charts query
-const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&limit=100';
+const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos,playlists&limit=100';
 
 
 fetch(chartsUrl, {
@@ -38,7 +38,7 @@ fetch(chartsUrl, {
   // for charts
   .then((json) => {
 
-    console.log(json.results.songs[0].data[0].attributes.previews)
+    console.log(json.results['music-videos'][0].data[0])
 
     
 

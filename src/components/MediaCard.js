@@ -43,27 +43,22 @@ class MediaCard extends Component {
       fontSize: `calc(${fontSize} - 5px)`
     };
 
+    let displayName = `${this.props.title} by ${this.props.subtitle}`;
+
     return (
 
       <div className={this.props.className} style={styles.cardContainer}>
-        {/* <Card style={{ border: 'none' }}>
-          <CardImg top width="100%" style={styles.cardImg} src={this.props.picUrl} alt="Card image cap" />
-
-          <CardBody style={styles.imageOverlay}>
-
-            <CardText style={titleStyle}>{this.props.title}</CardText>
-            {this.props.subtitle &&
-
-              <CardText style={styles.subtitle}>{this.props.subtitle}</CardText>}
-
-          </CardBody>}
-
-        </Card> */}
         <Card>
           <CardImg src={this.props.picUrl} alt="Card image cap" />
           <CardBody style={styles.cardBody}>
 
-            <CardText style={titleStyle}>{this.props.title}</CardText>
+            {this.props.type === 'Songs' ?
+              <Button color='link' style={titleStyle}
+                onClick={() => this.props.handleClick(this.props.previewUrl, displayName)}>
+                {this.props.title}</Button>
+              :
+              <p style={titleStyle}>
+                {this.props.title}</p>}
 
             {this.props.subtitle &&
               <CardText style={styles.subtitle}>{this.props.subtitle}</CardText>}
@@ -71,7 +66,7 @@ class MediaCard extends Component {
           </CardBody>
 
         </Card>
-        
+
       </div>
 
     );

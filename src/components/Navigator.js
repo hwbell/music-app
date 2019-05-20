@@ -17,6 +17,21 @@ class Genres extends Component {
     this.state = {
 
     }
+    this.renderLogo = this.renderLogo.bind(this);
+  }
+
+  renderLogo() {
+    return (
+      <Media query="(max-width: 599px)">
+        {matches =>
+          matches ? (
+            <p className="navlink" style={styles.logo}><i className="fab fa-apple"></i></p>
+          ) : (
+              <p className="navlink" style={styles.logo}><i className="fab fa-apple"></i> Music</p>
+            )
+        }
+      </Media>
+    )
   }
 
   componentDidMount() {
@@ -27,7 +42,7 @@ class Genres extends Component {
     return (
 
       <div className="nav" style={styles.container}>
-        <div>
+        <div style={{marginLeft: '20px'}}>
           <AnchorLink offset='80' href='#search'>
             <Button color='link' className="navlink">
               <p style={styles.navlink}>Search</p>
@@ -41,15 +56,13 @@ class Genres extends Component {
           </AnchorLink>
         </div>
 
-        <Media query="(max-width: 599px)">
-          {matches =>
-            matches ? (
-              <p style={styles.logo}><i className="fab fa-apple"></i></p>
-            ) : (
-                <p style={styles.logo}><i className="fab fa-apple"></i> Music</p>
-              )
-          }
-        </Media>
+        <a style={{marginRight: '20px'}} target="_blank" href="https://www.apple.com/apple-music/">
+          <Button color='link' className="navlink">
+            {this.renderLogo()}
+          </Button>
+        </a>
+
+
 
         {/* <p style={styles.logo}><i className="fab fa-apple"></i> Music</p> */}
 
@@ -68,7 +81,7 @@ const styles = {
     top: '0px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
     // backgroundColor: 'rgba(255, 255, 255, 0.95)'
   },

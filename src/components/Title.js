@@ -45,7 +45,7 @@ class Title extends Component {
 const styles = {
   container: {
     width: '100%',
-    margin: '40px auto'
+    margin: '10px auto'
   },
 
 }
