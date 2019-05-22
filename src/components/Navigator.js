@@ -10,7 +10,7 @@ import { Button } from 'reactstrap';
 import Media from 'react-media';
 
 // 
-class Genres extends Component {
+class Navigator extends Component {
 
   constructor(props) {
     super(props);
@@ -99,6 +99,6 @@ const styles = {
 
 }
 
-export default Genres;
+export default Navigator;
 
 

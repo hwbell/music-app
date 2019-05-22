@@ -29,7 +29,7 @@ const convertMillisToStandard = (millis) => {
 const shortenStr = (str, length) => {
   let tooLong = str.length > length;
   if (tooLong) {
-    return `${str.toString().slice(0, 20)} ...`;
+    return `${str.toString().slice(0, length)} ...`;
   }
   else {
     return str;
@@ -54,10 +54,10 @@ let arr = [
   },
 ]
 let shuffled = shuffle(arr);
-console.log(shuffled)
+// console.log(shuffled)
 
-console.log(shortenStr('hello, how are you?', 20))
-console.log(shortenStr('hello, how are you? are you here? who am i talking toooooo??', 20))
+// console.log(shortenStr('hello, how are you?', 20))
+// console.log(shortenStr('hello, how are you? are you here? who am i talking toooooo??', 20))
 
 module.exports = {
   getUsablePicUrl,

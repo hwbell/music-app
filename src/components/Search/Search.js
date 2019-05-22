@@ -14,6 +14,7 @@ import { Spinner } from 'reactstrap';
 // tools
 import { getWebToken } from '../../tools/getWebToken';
 import { getUsablePicUrl } from '../../tools/functions';
+const fetch = require("node-fetch");
 
 // set up some useful state objs
 const initialState = {
@@ -22,7 +23,7 @@ const initialState = {
   albums: null,
   stations: null,
   showLoading: true,
-  query: 'rolling stones'
+  query: 'beck'
 }
 
 // while getting new results
@@ -34,10 +35,8 @@ const loadingState = {
   showLoading: true
 }
 
-const fetch = require("node-fetch");
-
 // Search is the master component that contains all things related to the user's search input
-// contains SearchInput, SearchResults
+// contains SearchInput, Songs, MusicVideos, Artists, Albums
 class Search extends Component {
 
   constructor(props) {
@@ -72,10 +71,8 @@ class Search extends Component {
       headers
     })
       .then(res => res.json())
-      // for searches
       // .then(json => console.log(json.results.artists.data[0].relationships.albums.data[2]))
 
-      // for charts
       .then((json) => {
 
         // get these object via destructuring, then get rid of the ones that don't exist
@@ -93,9 +90,9 @@ class Search extends Component {
             let { data } = obj;
             let { type } = data[0];
 
-            console.log(`*************************Top ${type}***********************`);
-            console.log(`${data.length} ${type} returned`)
-            console.log(`**********************************************************`);
+            // console.log(`*************************Top ${type}***********************`);
+            // console.log(`${data.length} ${type} returned`)
+            // console.log(`**********************************************************`);
 
             // throw it in the object with its type as the property name
             definedData[`${type}`] = data;
@@ -103,13 +100,8 @@ class Search extends Component {
 
         });
 
+        // now we'll just have the data that was actually returned from the api
         self.setState(definedData);
-
-        // albums.forEach((album) => {
-        //   const img = new Image();
-        //   img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
-        //   // console.log(img.src)
-        // });
 
       })
       .catch((e) => console.log(e))
@@ -117,6 +109,14 @@ class Search extends Component {
   }
 
   // handleSubmit and handleChange will be passed to the SearchInput component
+
+  // handleChange changes the value of the current query
+  handleChange(value) {
+    this.setState({
+      query: value
+    });
+  }
+
   // handleSubmit fires the search for the current query
   handleSubmit(e) {
     console.log(`search fired => ${this.state.query}`)
@@ -126,13 +126,6 @@ class Search extends Component {
       this.fetchSearch(this.state.query);
     })
 
-  }
-
-  // handleChange changes the value of the current query
-  handleChange(value) {
-    this.setState({
-      query: value
-    });
   }
 
   // this is a separate handler for when the user clicks a new artist to search

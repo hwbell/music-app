@@ -3,13 +3,11 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
-import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 import Featured from './Featured';
 import TopHundred from './TopHundred';
 
 // tools
 import { getWebToken } from '../../tools/getWebToken';
-import ReactPlayer from 'react-player';
 
 const fetch = require("node-fetch");
 
