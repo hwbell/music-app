@@ -38,7 +38,7 @@ fetch(chartsUrl, {
   // for charts
   .then((json) => {
 
-    console.log(json.results['music-videos'][0].data[0])
+    console.log(json.results.playlists[0].data[0])
 
     
 

@@ -81,9 +81,11 @@ class CardCarousel extends Component {
 
       <div className="col" style={styles.container}>
 
-        <Title className="title-charts" color="rgb(221, 21, 98)" text={`Top 100 ${this.props.type}`} />
+        <p className="text-center" style={styles.titleText}>{`Top 100 ${this.props.type}`}</p>
 
         <CarouselProvider
+          isPlaying={true}
+          interval={5000}
           className="album-card"
           naturalSlideWidth={100}
           naturalSlideHeight={100}
@@ -121,6 +123,12 @@ const styles = {
   },
   slide: {
     // border: '1px solid black',
+  },
+  titleText: {
+    padding: '0px',
+    margin: '5px',
+    color: 'rgb(221, 21, 98)',
+    fontSize: 'calc(18px + 0.5vw)',
   },
   backButton: {
     position: 'absolute',

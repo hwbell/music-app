@@ -34,7 +34,7 @@ class Footer extends Component {
               href="https://www.apple.com/apple-music/"
               color="link">
               <i className="fab fa-apple footer-apple"></i></a>
-            <p style={styles.footerText}>Apple Music</p>
+            <p style={styles.footerText}><strong>Music</strong></p>
           </div>
 
           <div style={styles.iconContainer}>
@@ -42,7 +42,7 @@ class Footer extends Component {
               href="https://developer.apple.com/documentation/applemusicapi"
               color="link">
               <i className="fas fa-code footer-note"></i></a>
-            <p style={styles.footerText}>Developer API</p>
+            <p style={styles.footerText}><strong>API</strong></p>
           </div>
 
           {/* <div style={styles.iconContainer}>

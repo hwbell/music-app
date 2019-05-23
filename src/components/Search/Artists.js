@@ -126,7 +126,7 @@ const styles = {
   container: {
     marginTop: '40px',
     width: '95%',
-    maxWidth: '800px',
+    maxWidth: '720px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -141,12 +141,12 @@ const styles = {
   },
   titleText: {
     color: 'rgb(84, 26, 219)',
-    margin: '20px',
+    // margin: '20px',
     fontSize: 'calc(28px + 0.5vw)',
   },
   button: {
     // margin: '10px',
-    marginRight: 'calc(20px + 1vw)',
+    // marginRight: 'calc(20px + 1vw)',
     fontSize: 'calc(12px + 1vw)',
   },
   listHolder: {

@@ -43,7 +43,7 @@ class TopHundred extends Component {
 const styles = {
   container: {
     width: '100%',
-    maxWidth: '800px'
+    maxWidth: '750px'
     // border: '1px solid'
   },
 

@@ -155,7 +155,7 @@ class Search extends Component {
         }
 
         {/* display the title */}
-        <Title color="rgb(84, 26, 219)" text="find your music"/>
+        {/* <Title color="rgb(84, 26, 219)" text="song ~ artist ~ album ~ music video ~ playlist"/> */}
 
         {/* search bar */}
         <SearchInput
@@ -163,31 +163,31 @@ class Search extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} />
 
-        {askToSearch &&
+        {/* {askToSearch &&
           <p style={{ fontSize: 'calc(16px+0.5vw)' }}>search for a song, artist, or album</p>
-        }
+        } */}
 
         {/* songs section */}
         {this.state.songs &&
           <Songs 
-            title="songs" 
+            title="Songs" 
             handleClick={this.props.handleSongChange} 
             songsData={this.state.songs} />}
 
         {/* videos section */}
         {this.state['music-videos'] && 
-          <MusicVideos title="music videos" 
+          <MusicVideos title="Music Videos" 
             videosData={this.state['music-videos']}/>}
         
         {/* artists section */}
         {this.state.artists &&
-          <Artists title="artists" 
+          <Artists title="Artists" 
             handleClick={this.handleNewSelection} 
             artistsData={this.state.artists} />}
 
         {/* albums section */}
         {this.state.albums &&
-          <Albums title="albums" 
+          <Albums title="Albums" 
             albumsData={this.state.albums} 
             handleClick={this.props.handleSongChange}   
             />}
@@ -210,8 +210,8 @@ const styles = {
   },
   spinner: {
     position: 'absolute',
-    top: '40vh',
-    left: '48vw'
+    top: '30vh',
+    left: '45vw'
   }
 
 }

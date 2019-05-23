@@ -58,7 +58,7 @@ class MusicVideos extends Component {
 
   renderVideos(videosData, length) {
     return (
-      <div className="row">
+      <div className="row" style={styles.videosContainer}>
         {videosData.map((video, i) => {
           //console.log(i)
           //console.log(video)
@@ -106,9 +106,18 @@ class MusicVideos extends Component {
 
     const videosData = this.props.videosData;
 
+    const containerStyle = {
+      width: '95%',
+      maxWidth: this.props.width || '720px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+
     return (
 
-      <div style={styles.container}>
+      <div style={containerStyle}>
 
         <div style={styles.titleHolder}>
           <p className="title" style={styles.titleText}>{this.props.title}</p>
@@ -126,7 +135,7 @@ class MusicVideos extends Component {
 
         {/* put the rest in a collapse */}
         {this.props.videosData.length > 2 &&
-          <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
+          <Collapse style={{ width: '100%', marginLeft: '30px'}} isOpen={this.state.expanded}>
             {this.renderVideos(videosData.slice(2), videosData.length)}
           </Collapse>}
 
@@ -139,9 +148,10 @@ class MusicVideos extends Component {
 }
 
 const styles = {
-  container: {
-    width: '95%',
-    maxWidth: '800px',
+  videosContainer: {
+    width: '100%',
+    backgroundColor: 'white',
+    border: '0.5px solid rgb(0,0,0,0.1)'
   },
   titleHolder: {
     width: '100%',
@@ -152,12 +162,12 @@ const styles = {
   },
   titleText: {
     color: 'rgb(84, 26, 219)',
-    margin: '20px',
+    // margin: '20px',
     fontSize: 'calc(28px + 0.5vw)',
   },
   button: {
     // margin: '10px',
-    marginRight: 'calc(20px + 1vw)',
+    // marginRight: 'calc(20px + 1vw)'
     fontSize: 'calc(12px + 1vw)',
   },
   videoContainer: {

@@ -28,7 +28,7 @@ class SearchInput extends Component {
           style={styles.searchHolder}>
 
           <InputGroup>
-            <Input placeholder={this.props.query || "search"} 
+            <Input placeholder={this.props.query || "songs, artists, albums, music videos, playlists ..."} 
               value={this.props.query}
               style={styles.searchInput}
               onChange={(e) => this.props.handleChange(e.target.value)}
@@ -51,8 +51,8 @@ class SearchInput extends Component {
 
 const styles = {
   container: {
-    width: '260px',
-    marginBottom: '10px'
+    width: '320px',
+    margin: '15px'
   },
   searchHolder: {
 

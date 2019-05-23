@@ -8,6 +8,7 @@ import TopHundred from './TopHundred';
 import MusicVideos from "../Search/MusicVideos";
 // tools
 import { getWebToken } from '../../tools/getWebToken';
+import Title from '../Title';
 
 const fetch = require("node-fetch");
 
@@ -85,6 +86,8 @@ class TopCharts extends Component {
     return (
 
       <div className="" id="browse" style={styles.container}>
+
+        <Title text={"Trending Right Now"} color="rgb(221, 21, 98)"/>
 
         {/* the top 100 list for songs / ablums */}
         {this.state.topAlbumsData && this.state.topSongsData &&

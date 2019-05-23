@@ -9,6 +9,11 @@ body {
   min-height: 100vh;
 }
 
+/* for all links */
+link {
+  text-decoration: none;
+}
+
 /* the header and footer style */
 .header {
   background: linear-gradient(to right, rgb(221, 21, 98), rgb(128, 8, 241));

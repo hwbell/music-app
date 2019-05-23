@@ -10,7 +10,17 @@ import Footer from './Footer';
 import TopCharts from './Charts/TopCharts';
 import Search from './Search/Search';
 import AudioPlayer from './AudioPlayer';
-import { PoseGroup } from 'react-pose';
+import posed, { PoseGroup } from 'react-pose';
+
+// for pose animation
+const Div = posed.div({
+  visible: { 
+    opacity: 0.9,
+  },
+  hidden: { 
+    opacity: 0, 
+  }
+});
 
 class MainPage extends Component {
 
@@ -62,16 +72,13 @@ class MainPage extends Component {
         <TopCharts handleSongChange={this.handleSongChange} />
 
         {/* display the audio player at the bottom */}
-
-        {/* <PoseGroup> */}
-        {this.state.songPlaying &&
-
+        <Div pose={this.state.songPlaying ? 'visible' : 'hidden'}>
           <AudioPlayer key="audio"
             info={this.state.songPlayingInfo}
             url={this.state.songPlayingUrl}
             handleClick={this.closeAudioPlayer}
-          />}
-        {/* </PoseGroup> */}
+          />
+        </Div>
 
         {/* display the video player at the bottom */}
         {/* {this.state.videoPlaying &&
