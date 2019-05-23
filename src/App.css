@@ -14,28 +14,26 @@ body {
   background: linear-gradient(to right, rgb(221, 21, 98), rgb(128, 8, 241));
 }
 .footer {
-  background: linear-gradient(to right, rgb(221, 21, 98), rgb(128, 8, 241));
+  background: linear-gradient(to right, rgb(143, 110, 251), rgb(74, 77, 255));
+}
+.footer-apple, .footer-note, .footer-code {
+  font-size: 60px;
+  margin: 10px;
 }
 .footer-apple {
   background: -webkit-gradient(linear, left top, right bottom, from(rgb(221, 21, 98)), to(rgb(190, 15, 221)));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 80px;
-  margin: 20px;
 }
 .footer-code {
   color: rgb(190, 15, 221);
-  font-size: 50px;
-  margin: 20px;
 }
 .footer-note {
   background: -webkit-gradient(linear, left top, right bottom, from(rgb(190, 15, 221)), to(rgb(128, 8, 241)));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 80px;
-  margin: 20px;
 }
 
 /* for the Navigator Component */
@@ -46,6 +44,7 @@ body {
 .navlink {
   font-weight: 600;
   color: rgb(55, 30, 114);
+  transition: all 0.3s ease;
 }
 .navlink:hover {
   color: rgb(84, 26, 219);
@@ -77,8 +76,9 @@ body {
 
   /* AlbumCard component */
 .album-card {
-  box-shadow: 2px 2px 5px 1px rgba(2,2,2,0.5);
+  box-shadow: 3px 3px 5px 1px rgba(24,24,24,0.2);
 }
+
 .button-purple {
   border-radius: 3px;
   border: none;

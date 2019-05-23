@@ -44,12 +44,12 @@ class SongsList extends Component {
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
             let previewUrl = song.attributes.previews[0].url;
             
-            // this is to pass back to the main page for the audio player 
-            let songInfo = `${displayName} by ${artistName}`;
-
             return (
               <ListGroupItem className="song-list-item" key={i}
-                onClick={() => this.props.handleClick(previewUrl, songInfo)}>
+                
+                // this changes the song playing on the main page
+                onClick={() => this.props.handleClick(previewUrl, displayName)}>
+                
                 <div style={styles.listGroupItem}>
                   <p style={styles.listText}>{`${trackNumber}`}</p>
                   <p style={styles.listText}>{`${displayName}`}</p>

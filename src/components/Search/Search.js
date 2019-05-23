@@ -21,6 +21,7 @@ const initialState = {
   songs: null,
   artists: null,
   albums: null,
+  ['music-videos']: null,
   stations: null,
   showLoading: true,
   query: 'beck'
@@ -31,6 +32,7 @@ const loadingState = {
   songs: null,
   artists: null,
   albums: null,
+  ['music-videos']: null,
   stations: null,
   showLoading: true
 }

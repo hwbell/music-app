@@ -4,14 +4,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Media from "react-media";
 
 //  components
-import { Card, ListGroup, ListGroupItem, Collapse, Button, CardBody } from 'reactstrap';
+import { Collapse, Button } from 'reactstrap';
 import VideoPlayer from '../VideoPlayer';
 
 // tools
-import { getUsablePicUrl, convertMillisToStandard, shortenStr } from '../../tools/functions';
+import { getUsablePicUrl, shortenStr } from '../../tools/functions';
 
 // 
-class VideosList extends Component {
+class MusicVideos extends Component {
 
   constructor(props) {
     super(props);
@@ -47,9 +47,9 @@ class VideosList extends Component {
       <Media query="(max-width: 799px)">
         {matches =>
           matches ? (
-            <p style={style}>{shortenStr(text, 40)}</p>
+            <p style={style}>{shortenStr(text, 20)}</p>
           ) : (
-              <p style={style}>{text}</p>
+            <p style={style}>{shortenStr(text, 30)}</p>
             )
         }
       </Media>
@@ -60,6 +60,8 @@ class VideosList extends Component {
     return (
       <div className="row">
         {videosData.map((video, i) => {
+          //console.log(i)
+          //console.log(video)
 
           if (i < length) {
             let { artwork, name, artistName } = video.attributes;
@@ -68,17 +70,24 @@ class VideosList extends Component {
             let picUrl = getUsablePicUrl(video.attributes.artwork.url, 1000);
             let previewUrl = video.attributes.previews[0].url;
 
+            // skipping the ones without a preview for now
             if (previewUrl) {
               return (
-                <div key={i} className="col-sm-6 col-md-4" style={styles.videoContainer}>
+                <div key={i} className="col" style={styles.videoContainer}>
+
+                  {/* this will say featured song / featured video if these titles were fed to the component */}
+                  {this.props.sectionTitles &&
+                    <p style={styles.videoTitle}>{this.props.sectionTitles[i]}</p>}
 
                   <div>
-                    <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} style={{ width: '100%' }} />
-                  </div>
 
-                  <div>
+                    <div>
+                      <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} />
+                    </div>
+
                     {this.renderText(name, styles.songText)}
                     {this.renderText(artistName, styles.artistText)}
+
                   </div>
 
                 </div>
@@ -105,7 +114,7 @@ class VideosList extends Component {
           <p className="title" style={styles.titleText}>{this.props.title}</p>
 
           {/* this will open / close the remaining songs */}
-          {this.props.videosData.length > 3 &&
+          {this.props.videosData.length > 2 &&
             <Button color="link" style={styles.button} onClick={this.toggleExpanded}>
               {this.state.expanded ? 'show less' : 'all videos'}
             </Button>}
@@ -113,12 +122,13 @@ class VideosList extends Component {
         </div>
 
         {/* show the first 3 songs initally */}
-        {this.renderVideos(videosData, 3)}
+        {this.renderVideos(videosData, 2)}
 
         {/* put the rest in a collapse */}
-        <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
-          {this.renderVideos(videosData.slice(3), videosData.length)}
-        </Collapse>
+        {this.props.videosData.length > 2 &&
+          <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
+            {this.renderVideos(videosData.slice(2), videosData.length)}
+          </Collapse>}
 
 
 
@@ -130,7 +140,7 @@ class VideosList extends Component {
 
 const styles = {
   container: {
-    width: '100%',
+    width: '95%',
     maxWidth: '800px',
   },
   titleHolder: {
@@ -152,24 +162,34 @@ const styles = {
   },
   videoContainer: {
     marginTop: '30px',
+    minWidth: '300px',
+    maxWidth: '450px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  videoTitle: {
+    // textAlign: 'left',
+    padding: '0px',
+    margin: '5px',
+    color: 'rgb(221, 21, 98)',
+    fontSize: 'calc(18px + 0.5vw)',
   },
   songText: {
-    textAlign: 'left',
+    color: 'rgb(221, 21, 98)',
+    marginTop: '5px',
+    fontWeight: 'bold',
     fontSize: 'calc(12px + 0.5vw)',
   },
   artistText: {
-    margin: '0px',
+    // marginLeft: '12px',
     padding: '0px',
-    textAlign: 'left',
-    fontSize: 'calc(10px + 0.5vw)',
+    fontSize: 'calc(12px + 0.5vw)',
   },
 
 }
 
-export default VideosList;
+export default MusicVideos;
 
 

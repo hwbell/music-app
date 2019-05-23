@@ -37,7 +37,7 @@ class Featured extends Component {
       <div style={styles.cardHolder} className="col-md-6">
         <p style={styles.cardTitle}>featured {props.type}</p>
 
-        <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} style={{width: '100%'}} />
+        <VideoPlayer picUrl={picUrl} previewUrl={previewUrl} />
 
         <div>
           <p style={styles.songText}>{shortenStr(props.name.toLowerCase(), 60)}</p>
@@ -75,8 +75,8 @@ const styles = {
     minWidth: '200px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   cardTitle: {
     textAlign: 'left',

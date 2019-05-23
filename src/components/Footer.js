@@ -23,21 +23,36 @@ class Footer extends Component {
 
         <hr></hr>
 
-        <div style={styles.iconContainer}>
-          <a target="_blank"
-            href="https://www.apple.com/apple-music/"
-            color="link">
-            <i className="fab fa-apple footer-apple"></i></a>
+        <div style={styles.footerContainer}>
 
-          <a target="_blank"
-            href="https://developer.apple.com/documentation/applemusicapi"
-            color="link">
-            <i className="fas fa-code footer-code"></i></a>
+          <div style={styles.textContainer}>
+            <p style={styles.footerText}>This app was made with:</p>
+          </div>
 
-          <a target="_blank"
-            href="https://www.apple.com/itunes/"
-            color="link">
-            <i className="fab fa-itunes-note footer-note"></i></a>
+          <div style={styles.iconContainer}>
+            <a target="_blank"
+              href="https://www.apple.com/apple-music/"
+              color="link">
+              <i className="fab fa-apple footer-apple"></i></a>
+            <p style={styles.footerText}>Apple Music</p>
+          </div>
+
+          <div style={styles.iconContainer}>
+            <a target="_blank"
+              href="https://developer.apple.com/documentation/applemusicapi"
+              color="link">
+              <i className="fas fa-code footer-note"></i></a>
+            <p style={styles.footerText}>Developer API</p>
+          </div>
+
+          {/* <div style={styles.iconContainer}>
+            <a target="_blank"
+              href="https://www.apple.com/itunes/"
+              color="link">
+              <i className="fab fa-itunes-note footer-note"></i></a>
+            <p style={styles.footerText}>Itunes</p>  
+          </div> */}
+
         </div>
 
 
@@ -48,7 +63,7 @@ class Footer extends Component {
 }
 
 const styles = {
-  iconContainer: {
+  footerContainer: {
     height: '100px',
     margin: '30px auto',
     display: 'flex',
@@ -56,6 +71,21 @@ const styles = {
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
+  iconContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  iconContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  footerText: {
+    color: 'rgb(55, 30, 114)'
+  }
 }
 
 export default Footer;

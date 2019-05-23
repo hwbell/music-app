@@ -3,11 +3,11 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
-import { Card, CardBody, CardTitle, CardText, CardImg, ListGroup, ListGroupItem, Collapse, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem, Collapse, Button } from 'reactstrap';
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 // tools
 import { getUsablePicUrl } from '../../tools/functions';
-import { type } from 'os';
 
 // 
 class Artists extends Component {
@@ -71,11 +71,13 @@ class Artists extends Component {
                   </div>
                   <div className="col-9" style={styles.nameHolder}>
 
-                    <Button color="link"
-                      style={styles.artistText}
-                      onClick={() => this.props.handleClick(name)}>
-                      {`${name}`}
-                    </Button>
+                    <AnchorLink offset='80' href='#search'>
+                      <Button color="link"
+                        style={styles.artistText}
+                        onClick={() => this.props.handleClick(name)}>
+                        {`${name}`}
+                      </Button>
+                    </AnchorLink>
 
                     <p style={styles.listText}>{`${genreNames}`}</p>
 
@@ -103,9 +105,9 @@ class Artists extends Component {
           <p className="title" style={styles.titleText}>{this.props.title}</p>
 
           {this.props.artistsData.length > 3 &&
-          <Button color="link" style={styles.button} onClick={this.toggleExpanded}>
-            {this.state.expanded ? 'show less' : 'all artists'}
-          </Button>}
+            <Button color="link" style={styles.button} onClick={this.toggleExpanded}>
+              {this.state.expanded ? 'show less' : 'all artists'}
+            </Button>}
         </div>
 
         {this.renderArtists(this.props.artistsData, 3)}

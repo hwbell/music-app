@@ -40,14 +40,14 @@ class CardCarousel extends Component {
     return (
       <div>
         {shuffledData.map((data, i) => {
-          let artUrl = data.artwork.url;
+          let artUrl = data.attributes.artwork.url;
           let id = data.id;
           // get a usable url with real size
           let picUrl = getUsablePicUrl(artUrl, 500);
-          let previewUrl = data.previews ? data.previews[0].url : null;
+          let previewUrl = data.attributes.previews ? data.attributes.previews[0].url : null;
 
-          let fullName = data.name;
-          let artistName = data.artistName;
+          let fullName = data.attributes.name;
+          let artistName = data.attributes.artistName;
           let tooLong = fullName.length > 40;
 
           let title = tooLong ? fullName.toLowerCase().slice(0, 30) + '...' : fullName.toLowerCase();

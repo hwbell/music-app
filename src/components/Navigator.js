@@ -87,11 +87,11 @@ const styles = {
   },
   logo: {
     padding: '0px',
-    fontSize: 'calc(35px + 1vw)',
+    fontSize: 'calc(35px + 0.25vw)',
   },
   navlink: {
     padding: '0px',
-    fontSize: 'calc(20px + 1vw)',
+    fontSize: 'calc(20px + 0.251vw)',
     textDecoration: 'none'
   }
 

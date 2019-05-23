@@ -69,7 +69,7 @@ class SongsList extends Component {
             let previewUrl = song.attributes.previews[0].url;
 
             // this is to pass back to the main page for the audio player 
-            let songInfo = `${shortenStr(name, 20)} by ${artistName}`;
+            let songInfo = shortenStr(name, 20);
 
             return (
               <ListGroupItem key={i} style={styles.listGroupItem}>
@@ -129,7 +129,7 @@ class SongsList extends Component {
           {this.renderSongs(songsData.slice(3), songsData.length)}
         </Collapse>
 
-        
+        <hr></hr>
 
       </div>
 

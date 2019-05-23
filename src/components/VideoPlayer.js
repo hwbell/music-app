@@ -27,9 +27,12 @@ class VideoPlayer extends Component {
 
     return (
 
-      <div className="" style={this.props.style}>
+      <div className="album-card" style={this.props.style}>
 
         <Player
+          fluid={false}
+          width= {300}
+          height={200}
           playsInline
           poster={this.props.picUrl}
           src={this.props.previewUrl}>

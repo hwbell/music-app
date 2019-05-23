@@ -5,10 +5,10 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //  components
-import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 import CardCarousel from './CardCarousel';
+
 // 
-class Genres extends Component {
+class TopHundred extends Component {
 
   constructor(props) {
     super(props);
@@ -26,7 +26,8 @@ class Genres extends Component {
       <div style={styles.container} className="row">
         {/* carousel of mixed albums */}
         {this.props.topAlbumsData &&
-          <CardCarousel type="Albums" data={this.props.topAlbumsData} />}
+          <CardCarousel type="Albums" 
+            data={this.props.topAlbumsData} />}
 
         {/* carousel of mixed albums */}
         {this.props.topSongsData &&
@@ -49,6 +50,6 @@ const styles = {
 
 }
 
-export default Genres;
+export default TopHundred;
 
 

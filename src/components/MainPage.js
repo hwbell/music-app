@@ -9,11 +9,8 @@ import Header from './Header';
 import Footer from './Footer';
 import TopCharts from './Charts/TopCharts';
 import Search from './Search/Search';
-import ReactAudioPlayer from 'react-audio-player';
-import VideoPlayer from './VideoPlayer';
-import {Button} from 'reactstrap';
-
-// initial state for the component
+import AudioPlayer from './AudioPlayer';
+import { PoseGroup } from 'react-pose';
 
 class MainPage extends Component {
 
@@ -24,6 +21,7 @@ class MainPage extends Component {
       videoPlaying: false
     };
     this.handleSongChange = this.handleSongChange.bind(this);
+    this.closeAudioPlayer = this.closeAudioPlayer.bind(this);
     // this.handleVideoChange = this.handleVideoChange.bind(this);
   }
 
@@ -39,14 +37,11 @@ class MainPage extends Component {
     });
   }
 
-  // handleVideoChange(picUrl, videoUrl, info) {
-  //   this.setState({
-  //     videoPlaying: true,
-  //     videoPlayingPicUrl: picUrl,
-  //     videoPlayingPreviewUrl: videoUrl,
-  //     videoPlayingInfo: info
-  //   });
-  // }
+  closeAudioPlayer() {
+    console.log('closing audio')
+    this.setState({ songPlaying: false });
+    console.log('state set')
+  }
 
   render() {
     return (
@@ -67,23 +62,16 @@ class MainPage extends Component {
         <TopCharts handleSongChange={this.handleSongChange} />
 
         {/* display the audio player at the bottom */}
-        {this.state.songPlaying &&
-          <div style={styles.audioHolder}>
-            <Button className="float-right" 
-              color="link" 
-              onClick={() => this.setState({songPlaying: false})}>
-              
-              <i className="fas fa-times-circle"></i>
-            </Button>
 
-            <p style={styles.audioText}>{this.state.songPlayingInfo}</p>
-            <ReactAudioPlayer
-              style={styles.audioPlayer}
-              src={this.state.songPlayingUrl}
-              autoPlay
-              controls
-            />
-          </div>}
+        {/* <PoseGroup> */}
+        {this.state.songPlaying &&
+
+          <AudioPlayer key="audio"
+            info={this.state.songPlayingInfo}
+            url={this.state.songPlayingUrl}
+            handleClick={this.closeAudioPlayer}
+          />}
+        {/* </PoseGroup> */}
 
         {/* display the video player at the bottom */}
         {/* {this.state.videoPlaying &&
@@ -101,23 +89,7 @@ class MainPage extends Component {
 }
 
 const styles = {
-  audioHolder: {
-    // zIndex: 3,
-    position: 'fixed',
-    bottom: '5px',
-    left: '10px',
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    borderRadius: '25px',
-    minWidth: '250px'
-  },
-  audioPlayer: {
-    margin: '10px',
-    // width: '90%'
-  },
-  audioText: {
-    margin: '10px',
-    color: 'white'
-  },
+
 
   videoHolder: {
     zIndex: 3,

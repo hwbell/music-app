@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 //  components
 import Featured from './Featured';
 import TopHundred from './TopHundred';
-
+import MusicVideos from "../Search/MusicVideos";
 // tools
 import { getWebToken } from '../../tools/getWebToken';
 
@@ -50,57 +50,10 @@ class TopCharts extends Component {
       // for charts
       .then((json) => {
 
-        let albums = json.results.albums[0].data;
-        let songs = json.results.songs[0].data;
-        let videos = json.results['music-videos'][0].data;
-
-        // console.log(albums.length + " albums returned");
-        // console.log(songs.length + " songs returned");
-        // console.log(videos.length + " videos returned");
-
-        // console.log(`*************************Top Albums***********************`);
-
-        let topAlbumsData = albums.map((album, i) => {
-          let { id } = album;
-          let { name, url, artwork, artistName, releaseDate, editorialNotes } = album.attributes;
-          return {
-            type: 'album',
-            id, url, name, artwork, artistName, releaseDate, editorialNotes
-          }
-        });
-        // console.log(albumData[0])
-
-        // console.log(`**********************************************************`);
-
-        // console.log(`*************************Top Songs***********************`);
-
-        let topSongsData = songs.map((song, i) => {
-          let { id } = song;
-          let { previews, url, name, artwork, artistName, durationInMillis } = song.attributes;
-          return {
-            type: 'song',
-            previews, id, url, name, artwork, artistName, durationInMillis,
-          }
-        });
-        // console.log(songData[0])
-
-        // console.log(`**********************************************************`);
-
-        // console.log(`*************************Top Videos***********************`);
-
-        let topVideosData = videos.map((video, i) => {
-          let { id } = video;
-          let { previews, url, name, artwork, artistName, durationInMillis } = video.attributes;
-          return {
-            type: 'music video',
-
-            previews, id, url, name, artwork, artistName, durationInMillis,
-          }
-        });
-        // console.log(songData[0])
-
-        // console.log(`**********************************************************`);
-
+        let topAlbumsData = json.results.albums[0].data;
+        let topSongsData = json.results.songs[0].data;
+        let topVideosData = json.results['music-videos'][0].data;
+        
         // save the fetch results to state. shouldn't have to change these once we fetch
         this.setState({
           topAlbumsData,
@@ -137,14 +90,16 @@ class TopCharts extends Component {
         {this.state.topAlbumsData && this.state.topSongsData &&
           <TopHundred
             topAlbumsData={this.state.topAlbumsData}
-            topSongsData={this.state.topSongsData} 
+            topSongsData={this.state.topSongsData}
             handleSongChange={this.props.handleSongChange}
-            />}
+          />}
 
         {/* the two top feature cards - music video / song */}
         {this.state.topVideosData && this.state.topSongsData &&
-          <Featured topVideosData={this.state.topVideosData}
-            topSongsData={this.state.topSongsData} />}
+          <MusicVideos 
+            videosData={[this.state.topSongsData[0], this.state.topVideosData[0]]} 
+            sectionTitles={['Featured Song', 'Featured Video']}  
+            />}
 
         {/* {this.renderIcon()} */}
 
