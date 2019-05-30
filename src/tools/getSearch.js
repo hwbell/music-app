@@ -20,12 +20,15 @@ const headers = {
   Authorization: `Bearer ${jwtToken}`
 }
 
-const query = 'stop making sense';
-
 // for a search query
-const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists`;
+const query = 'pop';
+const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,playlists`;
 
-fetch(searchUrl, {
+// for a playlist query
+const id = `pl.5ee8333dbe944d9f9151e97d92d1ead9`;
+const playlistUrl = `https://api.music.apple.com/v1/catalog/us/playlists/${id}`;
+
+fetch(playlistUrl, {
   method: 'GET',
   headers
 })
@@ -36,34 +39,34 @@ fetch(searchUrl, {
   // for charts
   .then((json) => {
 
-    // console.log(json)
+    console.log(json.data[0].attributes)
 
     // let songs = json.results.songs.data;
     // let albums = json.results.albums.data;
     // let artists = json.results.artists.data;
 
-    let { songs, albums, artists } = json.results;
+    // let { songs, albums, artists, playlists } = json.results;
 
-    let definedData = {};
+    // let definedData = {};
 
-    [songs, albums, artists].forEach((obj) => {
-      // check if it is defined
-      if (obj) {
-        let { data } = obj;
-        let { type } = data[0];
+    // [songs, albums, artists, playlists].forEach((obj) => {
+    //   // check if it is defined
+    //   if (obj) {
+    //     let { data } = obj;
+    //     let { type } = data[0];
 
-        console.log(`*************************Top ${type}***********************`);
-        console.log(`${data.length} ${type} returned`)
+    //     console.log(`*************************Top ${type}***********************`);
+    //     console.log(`${data.length} ${type} returned`)
 
-        console.log('first album')
-        console.log(data[0])
-        console.log(`**********************************************************`);
+    //     console.log('first album')
+    //     console.log(data[0])
+    //     console.log(`**********************************************************`);
 
-        // throw it in the object with its type as the key name
-        definedData[`${type}`] = data;
-      }
+    //     // throw it in the object with its type as the key name
+    //     definedData[`${type}`] = data;
+    //   }
 
-    });
+    // });
     // console.log(definedData.songs);
   })
   .catch((e) => console.log(e))

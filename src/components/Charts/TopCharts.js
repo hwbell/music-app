@@ -38,7 +38,7 @@ class TopCharts extends Component {
       Authorization: `Bearer ${jwtToken}`
     }
 
-    const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos&limit=100';
+    const chartsUrl = 'https://api.music.apple.com/v1/catalog/us/charts?types=songs,albums,music-videos,playlists&limit=100';
 
     fetch(chartsUrl, {
       method: 'GET',

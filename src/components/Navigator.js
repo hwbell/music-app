@@ -75,7 +75,7 @@ class Navigator extends Component {
 const styles = {
   container: {
     width: '100%',
-    // height: '80px',
+    height: '65px',
     position: 'fixed',
     zIndex: 3,
     top: '0px',

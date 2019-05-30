@@ -10,7 +10,7 @@ import { Card, ListGroup, ListGroupItem, Collapse, Button, CardBody } from 'reac
 import { getUsablePicUrl, convertMillisToStandard, shortenStr } from '../../tools/functions';
 
 // 
-class SongsList extends Component {
+class playlistsList extends Component {
 
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class SongsList extends Component {
     }
     this.toggle = this.toggle.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
-    this.renderSongs = this.renderSongs.bind(this);
+    this.renderPlaylists = this.renderPlaylists.bind(this);
     this.renderText = this.renderText.bind(this);
   }
 
@@ -41,68 +41,50 @@ class SongsList extends Component {
   }
 
   // use this function to query the screen width and shorten the text if needed
-  renderText(text, style, contentRating) {
-
-    let explicit = contentRating === 'explicit';
+  renderText(text, style) {
 
     return (
       <Media query="(max-width: 599px)">
         {matches =>
           matches ? (
-            <div className="row">
-              <p style={style}>{shortenStr(text, 40)}</p>
-              {explicit && <p style={styles.explicitWarning}>E</p>}
-            </div>
+            <p style={style}>{shortenStr(text, 40)}</p>
           ) : (
-              <div className="row">
-                <p style={style}>{text}</p>
-                {explicit && <p style={styles.explicitWarning}>E</p>}
-              </div>
+              <p style={style}>{text}</p>
             )
         }
       </Media>
     )
   }
 
-  renderSongs(songsData, length) {
+  renderPlaylists(playlistsData, length) {
     return (
       <ListGroup style={styles.listGroup}>
-        {songsData.map((song, i) => {
+        {playlistsData.map((playlist, i) => {
 
           if (i < length) {
-            let { trackNumber, artwork, name, artistName, contentRating } = song.attributes;
+            let { url, artwork, name, artistName, description } = playlist.attributes;
 
-            {/* let duration = convertMillisToStandard(song.attributes.durationInMillis); */ }
-            let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
-            let previewUrl = song.attributes.previews[0].url;
+            {/* let duration = convertMillisToStandard(playlist.attributes.durationInMillis); */ }
+            {/* let imageSrc = artwork ? getUsablePicUrl(artwork.url, 300) : require('../../itunes.png');
 
             // this is to pass back to the main page for the audio player 
-            let songInfo = shortenStr(name, 20);
+            let playlistInfo = shortenStr(name, 20);
+            let editorialNotes = description.standard; */}
+
+            // embed with the apple toolkit!
+            let playlistIdUrl = url.slice(url.indexOf('playlist'));
+            let embedUrl = `https://embed.music.apple.com/us/${playlistIdUrl}?app=music&at=JL2MDAX9R6`
 
             return (
-              <ListGroupItem key={i} style={styles.listGroupItem}>
-                <div className="row">
-
-                  <div className="col-9">
-                    <Button color="link"
-                      style={styles.artistText}
-
-                      // the click function will change the song playing on the main
-                      // page 
-                      onClick={() => this.props.handleClick(previewUrl, songInfo)}>
-                      {this.renderText(name, styles.songText, contentRating)}
-                    </Button>
-
-                    {this.renderText(artistName, styles.listText)}
-                  </div>
-
-                  <div className="col-3" style={styles.imageHolder}>
-                    {/* <p className="" style={styles.listText}>{`${duration}`}</p> */}
-                    <img style={styles.image} src={imageSrc}></img>
-                  </div>
-
-                </div>
-              </ListGroupItem>
+              <div>
+                <iframe allow="autoplay *; encrypted-media *;"
+                  frameborder="0"
+                  height="300"
+                  style={styles.embed}
+                  sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                  src={embedUrl}>
+                </iframe>
+              </div>
             )
           }
 
@@ -113,7 +95,7 @@ class SongsList extends Component {
 
   render() {
 
-    const songsData = this.props.songsData;
+    const playlistsData = this.props.playlistsData;
 
     return (
 
@@ -122,20 +104,20 @@ class SongsList extends Component {
         <div style={styles.titleHolder}>
           <p className="title" style={styles.titleText}>{this.props.title}</p>
 
-          {/* this will open / close the remaining songs */}
-          {this.props.songsData.length > 3 &&
+          {/* this will open / close the remaining playlists */}
+          {playlistsData.length > 3 &&
             <Button color="link" style={styles.button} onClick={this.toggleExpanded}>
-              {this.state.expanded ? 'show less' : 'all songs'}
+              {this.state.expanded ? 'show less' : 'all playlists'}
             </Button>}
 
         </div>
 
-        {/* show the first 3 songs initally */}
-        {this.renderSongs(songsData, 3)}
+        {/* show the first 3 playlists initally */}
+        {this.renderPlaylists(playlistsData, 3)}
 
         {/* put the rest in a collapse */}
         <Collapse style={{ width: '100%' }} isOpen={this.state.expanded}>
-          {this.renderSongs(songsData.slice(3), songsData.length)}
+          {this.renderPlaylists(playlistsData.slice(3), playlistsData.length)}
         </Collapse>
 
         <hr></hr>
@@ -187,17 +169,12 @@ const styles = {
     padding: '0px',
     fontSize: 'calc(10px + 0.5vw)',
   },
-  songText: {
+  playlistText: {
     textAlign: 'left',
     padding: '0px',
-    marginRight: '10px',
+    margin: '0px',
     fontSize: 'calc(12px + 0.5vw)',
-  },
-  explicitWarning: { 
-    padding: '0px 6px',
-    backgroundColor: 'rgba(128, 128, 128, 0.5)', 
-    color: 'white',
-    fontWeight: 'bold', 
+
   },
   imageHolder: {
     display: 'flex',
@@ -212,6 +189,6 @@ const styles = {
 
 }
 
-export default SongsList;
+export default playlistsList;
 
 

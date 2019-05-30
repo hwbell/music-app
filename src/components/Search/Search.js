@@ -9,11 +9,21 @@ import Albums from '../Search/Albums';
 import Songs from '../Search/Songs';
 import MusicVideos from '../Search/MusicVideos';
 import Artists from '../Search/Artists';
+import Playlists from '../Search/Playlists';
 import { Spinner } from 'reactstrap';
+import Loader from 'react-loader-spinner';
+import posed, { PoseGroup } from 'react-pose';
 
 // tools
 import { getWebToken } from '../../tools/getWebToken';
 import { getUsablePicUrl } from '../../tools/functions';
+
+// pose containers
+const Div = posed.div({
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+});
+
 const fetch = require("node-fetch");
 
 // set up some useful state objs
@@ -23,8 +33,9 @@ const initialState = {
   albums: null,
   ['music-videos']: null,
   stations: null,
+  playlists: null,
   showLoading: true,
-  query: 'beck'
+  query: 'wu tang'
 }
 
 // while getting new results
@@ -34,6 +45,7 @@ const loadingState = {
   albums: null,
   ['music-videos']: null,
   stations: null,
+  playlists: null,
   showLoading: true
 }
 
@@ -66,7 +78,7 @@ class Search extends Component {
     }
 
     // for a search query
-    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,music-videos`;
+    const searchUrl = `https://api.music.apple.com/v1/catalog/us/search?term=${query}&limit=25&types=songs,albums,artists,music-videos,playlists`;
 
     fetch(searchUrl, {
       method: 'GET',
@@ -78,15 +90,15 @@ class Search extends Component {
       .then((json) => {
 
         // get these object via destructuring, then get rid of the ones that don't exist
-        let { songs, albums, artists } = json.results;
+        let { songs, albums, artists, playlists } = json.results;
         let videos = json.results['music-videos'];
 
         // initialize an object to store the results that exist
         // initialize with showLoading: false so the loader can be eliminated when we get the data
         // this way we only call this.setState({}) once below
         let definedData = { showLoading: false };
-        
-        [songs, albums, artists, videos].forEach((obj) => {
+
+        [songs, albums, artists, videos, playlists].forEach((obj) => {
           // check if it is defined
           if (obj) {
             let { data } = obj;
@@ -150,48 +162,78 @@ class Search extends Component {
 
       <div className="col" id="search" style={styles.container}>
 
-        {this.state.showLoading &&
-          <Spinner style={styles.spinner} color="primary" />
-        }
+        {/* <PoseGroup> */}
 
-        {/* display the title */}
-        {/* <Title color="rgb(84, 26, 219)" text="song ~ artist ~ album ~ music video ~ playlist"/> */}
+          {this.state.showLoading &&
+            <Div style={styles.loaderHolder} key="loader">
+              <Loader
+                height={100}
+                width={100}
+                type="ThreeDots"
+                color="rgb(221, 21, 98)"
+              />
+            </Div>
+          }
 
-        {/* search bar */}
-        <SearchInput
-          query={this.state.query}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit} />
+          {/* display the title */}
+          {/* <Title color="rgb(84, 26, 219)" text="song ~ artist ~ album ~ music video ~ playlist"/> */}
 
-        {/* {askToSearch &&
+          {/* search bar */}
+          <SearchInput key="search-input"
+            query={this.state.query}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit} />
+
+          {/* {askToSearch &&
           <p style={{ fontSize: 'calc(16px+0.5vw)' }}>search for a song, artist, or album</p>
         } */}
 
-        {/* songs section */}
-        {this.state.songs &&
-          <Songs 
-            title="Songs" 
-            handleClick={this.props.handleSongChange} 
-            songsData={this.state.songs} />}
+          {/* songs section */}
+          {this.state.songs &&
+            <Songs key="songs"
+              title="Songs" 
+              handleClick={this.props.handleSongChange}
+              songsData={this.state.songs} />}
 
-        {/* videos section */}
-        {this.state['music-videos'] && 
-          <MusicVideos title="Music Videos" 
-            videosData={this.state['music-videos']}/>}
-        
-        {/* artists section */}
-        {this.state.artists &&
-          <Artists title="Artists" 
-            handleClick={this.handleNewSelection} 
-            artistsData={this.state.artists} />}
+          <hr></hr>
+          {/* videos section */}
+          {this.state['music-videos'] &&
+            <MusicVideos title="Music Videos" key="music-videos"
+              videosData={this.state['music-videos']} />}
 
-        {/* albums section */}
-        {this.state.albums &&
-          <Albums title="Albums" 
-            albumsData={this.state.albums} 
-            handleClick={this.props.handleSongChange}   
+          {/* artists section */}
+          {this.state.artists &&
+            <Artists title="Artists" key="artists"
+              handleClick={this.handleNewSelection}
+              artistsData={this.state.artists} />}
+
+          {/* albums section */}
+          {this.state.albums &&
+            <Albums title="Albums" key="albums"
+              albumsData={this.state.albums}
+              handleClick={this.props.handleSongChange}
             />}
+
+          {/* albums section */}
+          {this.state.playlists &&
+            <Albums title="Playlists" key="playlists"
+              isPlaylists={true}
+              albumsData={this.state.playlists}
+              handleClick={this.props.handleSongChange}
+            />}
+
+          {/* playlists section */}
+          {/* {this.state.playlists &&
+          <Playlists title="Playlists" 
+            playlistsData={this.state.playlists} 
+            handleClick={this.props.handleSongChange}   
+            />} */}
+
+        {/* </PoseGroup> */}
+
       </div>
+
+
 
     );
   }
@@ -208,7 +250,7 @@ const styles = {
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
-  spinner: {
+  loaderHolder: {
     position: 'absolute',
     top: '30vh',
     left: '45vw'

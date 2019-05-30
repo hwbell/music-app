@@ -101,7 +101,7 @@ link {
 
   /* AlbumDetail component */
 .album-detail-card {
-  max-height: 780px;
+  max-height: 600px;
   overflow: auto;
   transition:  all 0.3s ease;
   background: -webkit-gradient(linear, left top, right bottom, from(rgb(157, 102, 253)), to(rgb(0, 0, 0)));

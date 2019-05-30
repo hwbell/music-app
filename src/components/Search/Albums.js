@@ -40,14 +40,13 @@ class Albums extends Component {
   prefetchImages() {
     this.props.albumsData.forEach((album) => {
       const img = new Image();
-      img.src = getUsablePicUrl(album.attributes.artwork.url, 500);
+      img.src = getUsablePicUrl(album.attributes.artwork.url, 500, 'cc');
       // console.log(img.src)
     });
   }
 
-  // this will be a new search of the album selected, since we don't get the actual tracks from 
-  // the album attributes. Make search fetch for songs only, using the album name as the query,
-  // and grab only the songs that have that album name 
+  // this will be a new call for the album selected, since we don't get the actual tracks from 
+  // the album attributes. 
   fetchSongList(query) {
 
     const self = this;
@@ -62,9 +61,13 @@ class Albums extends Component {
     }
 
     // for an album query
-    const searchUrl = `https://api.music.apple.com/v1/catalog/us/albums/${query}`;
+    const albumUrl = `https://api.music.apple.com/v1/catalog/us/albums/${query}`;
+    // for a playlist query
+    const playlistUrl = `https://api.music.apple.com/v1/catalog/us/playlists/${query}`;
 
-    fetch(searchUrl, {
+    let fetchUrl = this.props.isPlaylists ? playlistUrl : albumUrl;
+
+    fetch(fetchUrl, {
       method: 'GET',
       headers
     })
@@ -111,7 +114,7 @@ class Albums extends Component {
           let artUrl = album.attributes.artwork.url;
           let id = album.attributes.id;
           // get a usable url with real size
-          let picUrl = getUsablePicUrl(artUrl, 500);
+          let picUrl = getUsablePicUrl(artUrl, 500, 'cc');
 
           let fullName = album.attributes.name;
           let tooLong = fullName.length > 40;
@@ -123,7 +126,7 @@ class Albums extends Component {
             <MediaOverlayCard key={i}
               className="album-card col-6 col-md-4"
               handleClick={this.handleClick}
-              index={startIndex+i}
+              index={startIndex + i}
               id={id}
               title={title}
               picUrl={picUrl} />
@@ -171,9 +174,10 @@ class Albums extends Component {
               </div>
             </Collapse>
 
-            <Button className='button-purple' style={styles.button} onClick={this.toggleExpanded}>
-              {this.state.expanded ? 'less' : 'more'}
-            </Button>
+            {this.props.albumsData.length > 9 &&
+              <Button className='button-purple' style={styles.button} onClick={this.toggleExpanded}>
+                {this.state.expanded ? 'less' : 'more'}
+              </Button>}
 
 
 

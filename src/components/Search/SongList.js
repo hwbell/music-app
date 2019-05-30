@@ -43,13 +43,13 @@ class SongsList extends Component {
             let displayName = shortenStr(name, 20)
             let duration = convertMillisToStandard(song.attributes.durationInMillis);
             let previewUrl = song.attributes.previews[0].url;
-            
+
             return (
               <ListGroupItem className="song-list-item" key={i}
-                
+
                 // this changes the song playing on the main page
                 onClick={() => this.props.handleClick(previewUrl, displayName)}>
-                
+
                 <div style={styles.listGroupItem}>
                   <p style={styles.listText}>{`${trackNumber}`}</p>
                   <p style={styles.listText}>{`${displayName}`}</p>
@@ -67,24 +67,26 @@ class SongsList extends Component {
 
   render() {
 
-    let collapseStyle = { width: this.props.width || '100%' };
+    let collapseStyle = { 
+      width: this.props.width || '100%',
+    };
 
 
     return (
 
       <div style={styles.container}>
 
+        {this.props.songList.length > 0 &&
+          <Button className="button-purple"
+            style={styles.button}
+            onClick={this.props.toggle}>
+            {this.props.collapse ? `+` : `-`} songs</Button>}
+
         <Collapse style={collapseStyle} isOpen={this.props.collapse}>
           <div style={styles.card}>
             {this.renderSongs(this.props.songList, this.props.songList.length)}
           </div>
         </Collapse>
-
-        {this.props.songList.length > 0 &&
-          <Button className="button-purple"
-            style={collapseStyle}
-            onClick={this.props.toggle}>
-            {this.props.title}</Button>}
 
       </div>
 
@@ -104,11 +106,16 @@ const styles = {
   card: {
     width: '100%'
   },
+  button: {
+    borderRadius: '4px',
+    margin: '10px',
+    alignSelf: 'flex-start'
+  },
   listGroup: {
     width: '100%',
   },
   listGroupItem: {
-    
+
     width: '100%',
     height: '20px',
     display: 'flex',

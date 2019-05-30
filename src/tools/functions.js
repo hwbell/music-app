@@ -1,12 +1,15 @@
 
 // this function takes the artwork url from the apple music api and the desired image size 
 // and returns a usable url
-const getUsablePicUrl = (url, size) => {
+const getUsablePicUrl = (url, size, ext) => {
   // slice off the ending '{w}x{h}bb.jpeg' part of the url. we can replace it
   // with '200x200bb.jpeg' for example. width + height can be assigned this way
   let slicePoint = url.indexOf('{w}');
 
-  return url.slice(0, slicePoint) + `${size}x${size}bb.jpeg`;
+  // the only urls with 'cc' as far as I know are from playlist data. I dont know what this means.
+  let letterExt = ext ? ext : 'bb';
+
+  return url.slice(0, slicePoint) + `${size}x${size}${letterExt}.jpeg`;
 }
 
 // this function takes millisecond time and converts it to standard

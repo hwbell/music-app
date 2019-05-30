@@ -8,75 +8,69 @@ import SongList from '../Search/SongList';
 
 // tools
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
+import { getUsablePicUrl } from '../../tools/functions';
 // 
 class AlbumDetail extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showSongList: false,
-      songPlaying: true
+    constructor(props) {
+      super(props);
+      this.state = {
+        showSongList: false,
+        songPlaying: true
+      }
+      this.toggleSongList = this.toggleSongList.bind(this);
+
     }
-    this.toggleSongList = this.toggleSongList.bind(this);
 
-  }
+    componentDidMount() {
+      // 
+    }
 
-  componentDidMount() {
-    // 
-  }
+    toggleSongList() {
+      this.setState({
+        showSongList: !this.state.showSongList
+      })
+    }
 
-  toggleSongList() {
-    this.setState({
-      showSongList: !this.state.showSongList
-    })
-  }
+    render() {
 
-  render() {
+      // console.log(this.props.album.attributes)
 
-    // console.log(this.props.album.attributes)
+      let { artistName, name, artwork, recordLabel, releaseDate, editorialNotes } = this.props.album.attributes;
 
-    let { artistName, name, artwork, recordLabel, releaseDate, editorialNotes } = this.props.album.attributes;
+      let picUrl = getUsablePicUrl(artwork.url, 500, 'cc');
+      let date = releaseDate ? `${artistName} - ${releaseDate.slice(0, 4)}` : artistName;
 
-    // slice off the ending '{w}x{h}bb.jpeg' part of the url. we can replace it
-    // with '200x200bb.jpeg' for example. width + height can be assigned this way
-    let slicePoint = artwork.url.indexOf('{w}');
+      return (
 
-    let picUrl = artwork.url.slice(0, slicePoint) + '1000x1000bb.jpeg';
+        <Card className="album-detail-card" style={styles.container}>
+          <img style={styles.cardImg} src={picUrl} alt="Card image cap" />
 
-    return (
+          <div style={styles.textContainer}>
+            <CardTitle style={styles.cardTitle}>{name}</CardTitle>
+            <CardText style={styles.cardText}>{date}</CardText>
 
-      <Card className="album-detail-card" style={styles.container}>
-        <img style={styles.cardImg} src={picUrl} alt="Card image cap" />
+            {/* the song list with toggler. just pass it the songList when its ready */}
+            {this.props.songList &&
+              <SongList isSmall={true}
+                handleClick={this.props.handleClick}
+                collapse={this.state.showSongList}
+                toggle={this.toggleSongList}
+                songList={this.props.songList}/>}
 
-        <div style={styles.textContainer}>
-          <CardTitle style={styles.cardTitle}>{name}</CardTitle>
-
-          <div className="row">
-            <CardText style={styles.cardText}>{`${artistName} -${releaseDate.slice(0, 4)}`}</CardText>
+            
+            {/* sometimes these arent present */}
+            {editorialNotes &&
+              <CardText style={styles.cardDesc}>
+                {ReactHtmlParser(editorialNotes.standard)}
+              </CardText>}
           </div>
 
-          {/* sometimes these arent present */}
-          {editorialNotes &&
-            <CardText style={styles.cardDesc}>
-              {ReactHtmlParser(editorialNotes.standard)}
-            </CardText>}
+        </Card>
 
-          {/* the song list with toggler. just pass it the songList when its ready */}
-          {this.props.songList &&
-            <SongList isSmall={true}
-              handleClick={this.props.handleClick}
-              collapse={this.state.showSongList}
-              toggle={this.toggleSongList}
-              songList={this.props.songList}
-              title="show tracks" />}
-        </div>
-
-      </Card>
-
-    );
+      );
+    }
   }
-}
 
 const styles = {
   container: {
