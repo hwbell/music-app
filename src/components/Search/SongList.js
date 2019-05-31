@@ -80,7 +80,7 @@ class SongsList extends Component {
           <Button className="button-purple"
             style={styles.button}
             onClick={this.props.toggle}>
-            {this.props.collapse ? `+` : `-`} songs</Button>}
+            {this.props.collapse ? `-` : `+`} songs</Button>}
 
         <Collapse style={collapseStyle} isOpen={this.props.collapse}>
           <div style={styles.card}>

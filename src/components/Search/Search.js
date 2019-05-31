@@ -9,8 +9,6 @@ import Albums from '../Search/Albums';
 import Songs from '../Search/Songs';
 import MusicVideos from '../Search/MusicVideos';
 import Artists from '../Search/Artists';
-import Playlists from '../Search/Playlists';
-import { Spinner } from 'reactstrap';
 import Loader from 'react-loader-spinner';
 import posed, { PoseGroup } from 'react-pose';
 
@@ -195,7 +193,6 @@ class Search extends Component {
               handleClick={this.props.handleSongChange}
               songsData={this.state.songs} />}
 
-          <hr></hr>
           {/* videos section */}
           {this.state['music-videos'] &&
             <MusicVideos title="Music Videos" key="music-videos"
@@ -253,7 +250,7 @@ const styles = {
   loaderHolder: {
     position: 'absolute',
     top: '30vh',
-    left: '45vw'
+    left: 'calc(50vw - 55px)'
   }
 
 }

@@ -40,7 +40,7 @@ class Navigator extends Component {
 
   render() {
     return (
-
+      
       <div className="nav" style={styles.container}>
         <div style={{marginLeft: '20px'}}>
           <AnchorLink offset='80' href='#search'>

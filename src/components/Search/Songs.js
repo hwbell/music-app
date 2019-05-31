@@ -51,12 +51,12 @@ class SongsList extends Component {
           matches ? (
             <div className="row">
               <p style={style}>{shortenStr(text, 40)}</p>
-              {explicit && <p style={styles.explicitWarning}>E</p>}
+              {/* {explicit && <p style={styles.explicitWarning}>E</p>} */}
             </div>
           ) : (
               <div className="row">
                 <p style={style}>{text}</p>
-                {explicit && <p style={styles.explicitWarning}>E</p>}
+                {/* {explicit && <p style={styles.explicitWarning}>E</p>} */}
               </div>
             )
         }
@@ -83,10 +83,8 @@ class SongsList extends Component {
               <ListGroupItem key={i} style={styles.listGroupItem}>
                 <div className="row">
 
-                  <div className="col-9">
+                  <div className="col-9" style={styles.nameHolder}>
                     <Button color="link"
-                      style={styles.artistText}
-
                       // the click function will change the song playing on the main
                       // page 
                       onClick={() => this.props.handleClick(previewUrl, songInfo)}>
@@ -177,6 +175,12 @@ const styles = {
     // margin: '20px',
     fontSize: 'calc(28px + 0.5vw)',
   },
+  nameHolder: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   button: {
     // margin: '10px',
     // marginRight: 'calc(20px + 1vw)',
@@ -184,13 +188,12 @@ const styles = {
   },
   listText: {
     marginLeft: '10px',
-    padding: '0px',
+    padding: '0px 4px',
     fontSize: 'calc(10px + 0.5vw)',
   },
   songText: {
     textAlign: 'left',
-    padding: '0px',
-    marginRight: '10px',
+    padding: '0px 4px',
     fontSize: 'calc(12px + 0.5vw)',
   },
   explicitWarning: { 
@@ -206,8 +209,8 @@ const styles = {
     alignItems: 'center',
   },
   image: {
-    height: 'calc(50px + 2vw)',
-    width: 'calc(50px + 2vw'
+    width: '80px',
+    height: '80px'
   },
 
 }
