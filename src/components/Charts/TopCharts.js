@@ -98,11 +98,11 @@ class TopCharts extends Component {
           />}
 
         {/* the two top feature cards - music video / song */}
-        {this.state.topVideosData && this.state.topSongsData &&
+        {/* {this.state.topVideosData && this.state.topSongsData &&
           <MusicVideos 
             videosData={[this.state.topSongsData[0], this.state.topVideosData[0]]} 
             sectionTitles={['Featured Song', 'Featured Video']}  
-            />}
+            />} */}
 
         {/* {this.renderIcon()} */}
 

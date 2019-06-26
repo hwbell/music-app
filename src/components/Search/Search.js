@@ -33,7 +33,7 @@ const initialState = {
   stations: null,
   playlists: null,
   showLoading: true,
-  query: 'wu tang'
+  query: 'beck'
 }
 
 // while getting new results
@@ -211,7 +211,7 @@ class Search extends Component {
               handleClick={this.props.handleSongChange}
             />}
 
-          {/* albums section */}
+          {/* playlists section */}
           {this.state.playlists &&
             <Albums title="Playlists" key="playlists"
               isPlaylists={true}
@@ -219,12 +219,6 @@ class Search extends Component {
               handleClick={this.props.handleSongChange}
             />}
 
-          {/* playlists section */}
-          {/* {this.state.playlists &&
-          <Playlists title="Playlists" 
-            playlistsData={this.state.playlists} 
-            handleClick={this.props.handleSongChange}   
-            />} */}
 
         {/* </PoseGroup> */}
 
